@@ -158,11 +158,11 @@
 
         function calculateStatus(dateStr) {
             if(!dateStr || dateStr === "" || dateStr === "undefined" || dateStr === "Invalid Date") {
-                return { last: "আপনার তথ্যটি আপডেট করে নিন", next: "আপডেট প্রয়োজন ❌" };
+                return { last: "আপনার তথ্যটি আপডেট করুন", next: "আপডেট প্রয়োজন ❌" };
             }
             const lastDate = new Date(dateStr);
             if (isNaN(lastDate.getTime())) {
-                return { last: "আপনার তথ্যটি আপডেট করে নিন", next: "আপডেট প্রয়োজন ❌" };
+                return { last: "আপনার তথ্যটি আপডেট করুন", next: "আপডেট প্রয়োজন ❌" };
             }
             const diffDays = Math.floor((new Date() - lastDate) / (1000 * 60 * 60 * 24));
             const fmt = lastDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
