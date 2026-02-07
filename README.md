@@ -8,17 +8,30 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Hind Siliguri', sans-serif; background-color: #f8fafc; }
+        .headline-container { display: flex; align-items: center; justify-content: center; gap: 10px; }
     </style>
 </head>
 <body class="bg-gray-50 pb-20">
 
-    <div class="bg-red-600 text-white p-8 text-center shadow-lg">
-        <h1 class="text-3xl font-bold uppercase tracking-tight">যুব কল্যাণ রক্তদান ফাউন্ডেশন</h1>
-        <p class="text-sm opacity-90 mt-1 italic">মানবতার কল্যাণে আমাদের রক্তদান</p>
+    <div class="bg-red-600 text-white p-6 shadow-lg">
+        <div class="headline-container mb-4">
+            <img src="https://raw.githubusercontent.com/mehedi131600-cmd/mehedi131600-cmd.github.io/main/logo.png" 
+                 alt="Logo" 
+                 onerror="this.src='https://i.ibb.co/vxsL88m/logo.png'"
+                 class="w-12 h-12 rounded-full border-2 border-white shadow-md object-contain bg-white">
+            <h1 class="text-xl md:text-2xl font-bold uppercase tracking-tight whitespace-nowrap">যুব কল্যাণ রক্তদান ফাউন্ডেশন</h1>
+        </div>
         
-        <div class="mt-6 pt-4 border-t border-red-400">
-            <p class="text-lg font-bold text-yellow-300">প্রতিষ্ঠাতা পরিচালক: মোঃ মেহেদী হাসান</p>
-            <a href="tel:01888354739" class="inline-block mt-2 bg-white text-red-600 px-6 py-2 rounded-full text-sm font-bold shadow-md">📞 কল করুন: 01888354739</a>
+        <div class="text-center pt-2 border-t border-red-400/50">
+            <p class="text-md font-semibold text-yellow-300">প্রতিষ্ঠাতা পরিচালক: মোঃ মেহেদী হাসান</p>
+            <div class="flex items-center justify-center gap-3 mt-3">
+                <a href="tel:01888354739" class="bg-white text-red-600 px-4 py-1.5 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                    📞 01888354739
+                </a>
+                <a href="https://facebook.com/groups/jubokolyan.bdf/" target="_blank" class="bg-blue-600 text-white px-4 py-1.5 rounded-full text-xs font-bold shadow-md flex items-center gap-1">
+                    👥 ফেসবুক গ্রুপ
+                </a>
+            </div>
         </div>
     </div>
 
@@ -35,25 +48,24 @@
     <div id="donorList" class="p-4 grid gap-4 hidden"></div>
 
     <script>
-        // আপনার সঠিক লিঙ্কটি এখানে দেওয়া হয়েছে
         const url = "https://script.google.com/macros/s/AKfycbzbHWB2_5S77EH29tXH9JGIZD7CiotsAYtUl778hn36ymr2OoQ_-N31X8K_NNr7uOag/exec"; 
+        let allDonors = [];
 
         async function loadDonors() {
             const loadingDiv = document.getElementById('loading');
             try {
                 const response = await fetch(url);
-                const data = await response.json();
+                allDonors = await response.json();
                 
-                if (data && data.length > 0) {
-                    displayDonors(data);
+                if (allDonors && allDonors.length > 0) {
+                    displayDonors(allDonors);
                     loadingDiv.classList.add('hidden');
                     document.getElementById('donorList').classList.remove('hidden');
                 } else {
-                    loadingDiv.innerText = "শিটে কোনো ডাটা নেই। অনুগ্রহ করে গুগল শিটে ডোনারের নাম যোগ করুন।";
+                    loadingDiv.innerText = "শিটে কোনো ডাটা পাওয়া যায়নি।";
                 }
             } catch (e) { 
-                console.error(e);
-                loadingDiv.innerHTML = "<p class='text-red-500'>লিঙ্ক ত্রুটি! <br> আপনার Apps Script লিঙ্কটি চেক করুন অথবা 'Anyone' এক্সেস দিন।</p>"; 
+                loadingDiv.innerHTML = "<p class='text-red-500 font-bold text-sm'>সার্ভার সমস্যা! <br> Apps Script লিঙ্কটি চেক করুন।</p>"; 
             }
         }
 
@@ -100,6 +112,24 @@
                     </div>
                     <a href="tel:${d.p}" class="block w-full bg-red-600 text-white py-3 rounded-2xl font-bold text-center text-sm shadow-md active:scale-95 transition-all">📞 কল দিন</a>
                 </div>`;
+            });
+        }
+
+        function filterDonors() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let group = document.getElementById('groupFilter').value;
+            let filtered = allDonors.filter(d => 
+                (String(d.n).toLowerCase().includes(input) || String(d.l).toLowerCase().includes(input)) && 
+                (group === "" || String(d.g).trim() === group)
+            );
+            displayDonors(filtered);
+        }
+
+        loadDonors();
+    </script>
+</body>
+</html>
+</div>`;
             });
         }
 
