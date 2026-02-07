@@ -8,22 +8,29 @@
     <link href="https://fonts.googleapis.com/css2?family=Hind+Siliguri:wght@400;600;700&display=swap" rel="stylesheet">
     <style>
         body { font-family: 'Hind Siliguri', sans-serif; background-color: #f8fafc; }
-        .sticky-footer { position: fixed; bottom: 0; width: 100%; z-index: 50; }
     </style>
 </head>
-<body class="bg-gray-50 pb-40">
+<body class="bg-gray-50 pb-10">
 
     <div class="bg-red-600 text-white p-6 text-center shadow-lg sticky top-0 z-20">
         <h1 class="text-2xl font-bold">যুব কল্যাণ রক্তদান ফাউন্ডেশন</h1>
-        <p class="text-sm opacity-90 mt-1">মানবতার কল্যাণে আমাদের রক্তদান</p>
+        <p class="text-sm opacity-90 mt-1 italic">মানবতার কল্যাণে আমাদের রক্তদান</p>
+        
+        <div class="mt-4 pt-3 border-t border-red-400">
+            <p class="text-[11px] uppercase tracking-widest opacity-80">যেকোনো প্রয়োজনে যোগাযোগ করুন</p>
+            <p class="text-md font-bold text-yellow-300">প্রতিষ্ঠাতা পরিচালক: মোঃ মেহেদী হাসান</p>
+            <a href="tel:01888354739" class="inline-block mt-2 bg-white text-red-600 px-4 py-1 rounded-full text-sm font-bold shadow-md active:scale-95 transition-transform">
+                📞 01888354739
+            </a>
+        </div>
     </div>
 
-    <div class="m-4 p-4 bg-blue-50 border-l-4 border-blue-500 rounded-r-xl shadow-sm">
-        <h4 class="font-bold text-blue-700 text-sm italic">📢 নতুন সদস্য হতে চান?</h4>
-        <p class="text-xs text-blue-600 mt-1">আপনি যদি আমাদের ফাউন্ডেশনের সদস্য হয়ে মানবতার সেবায় অংশ নিতে আগ্রহী হন, তবে অবশ্যই নিচের নাম্বারে যোগাযোগ করুন।</p>
+    <div class="m-4 p-4 bg-white border-l-4 border-red-500 rounded-xl shadow-sm">
+        <h4 class="font-bold text-red-600 text-sm">📢 নতুন সদস্য হতে আগ্রহী?</h4>
+        <p class="text-xs text-gray-600 mt-1">আপনি যদি আমাদের ফাউন্ডেশনের সদস্য হয়ে মানবতার সেবায় অংশ নিতে চান, তবে উপরে দেওয়া নাম্বারে অবশ্যই যোগাযোগ করুন।</p>
     </div>
 
-    <div class="mx-4 p-4 bg-white shadow-md rounded-2xl sticky top-[88px] z-10 border border-gray-100">
+    <div class="mx-4 p-4 bg-white shadow-md rounded-2xl sticky top-[180px] z-10 border border-gray-100">
         <input type="text" id="searchInput" onkeyup="filterDonors()" placeholder="নাম বা এলাকা লিখে খুঁজুন..." class="w-full p-3 border border-gray-200 rounded-xl mb-3 outline-none focus:ring-2 focus:ring-red-500 text-sm">
         <select id="groupFilter" onchange="filterDonors()" class="w-full p-3 border border-gray-200 rounded-xl font-bold text-red-600 outline-none text-sm bg-white text-center">
             <option value="">সব রক্তের গ্রুপ</option>
@@ -38,19 +45,8 @@
         <div class="animate-spin inline-block w-8 h-8 border-4 border-red-500 border-t-transparent rounded-full mb-2"></div>
         <p class="text-gray-500 font-bold">তথ্য লোড হচ্ছে...</p>
     </div>
-    <div id="donorList" class="p-4 grid gap-4 hidden"></div>
 
-    <div class="sticky-footer bg-slate-900 text-white p-4 shadow-[0_-5px_15px_rgba(0,0,0,0.2)]">
-        <div class="text-center">
-            <p class="text-[10px] text-gray-400 uppercase font-bold tracking-widest mb-1">যেকোনো প্রয়োজনে যোগাযোগ করুন</p>
-            <h2 class="font-bold text-md text-red-400">প্রতিষ্ঠাতা পরিচালক: মোঃ মেহেদী হাসান</h2>
-            <div class="flex justify-center items-center gap-2 mt-2">
-                <a href="tel:01888354739" class="bg-green-600 px-4 py-2 rounded-full text-sm font-bold flex items-center gap-2 shadow-md active:scale-95 transition-transform">
-                    📞 01888354739
-                </a>
-            </div>
-        </div>
-    </div>
+    <div id="donorList" class="p-4 grid gap-4 hidden"></div>
 
     <script>
         const url = "https://script.google.com/macros/s/AKfycbyT5Wy8zwAZw30r3bNetoQnhhvlxuWYsf8yaBQx_rQwWMCOy5UvmBI8M3jgbVT-7qUc/exec";
@@ -63,38 +59,7 @@
             const today = new Date();
             const diffTime = (today - lastDate);
             const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-            if (diffDays >= 90) return { text: "রক্ত দিতে পারবে", class: "text-green-600 bg-green-50 border-green-100" };
-            else return { text: "৩ মাস হয়নি", class: "text-red-600 bg-red-50 border-red-100" };
-        }
-
-        async function loadDonors() {
-            try {
-                const response = await fetch(url);
-                allDonors = await response.json();
-                displayDonors(allDonors);
-                document.getElementById('loading').classList.add('hidden');
-                document.getElementById('donorList').classList.remove('hidden');
-            } catch (e) {
-                document.getElementById('loading').innerHTML = "<p class='text-red-500'>সার্ভার সমস্যা!</p>";
-            }
-        }
-
-        function displayDonors(data) {
-            const list = document.getElementById('donorList');
-            list.innerHTML = "";
-            data.forEach(d => {
-                const status = getDonationStatus(d.last);
-                list.innerHTML += `
-                    <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 relative mb-2">
-                        <span class="absolute top-0 right-0 bg-gray-100 text-gray-400 text-[9px] px-3 py-1 rounded-bl-2xl font-bold">SL: ${d.sl}</span>
-                        <div class="flex justify-between items-start mb-4 mt-2">
-                            <div class="w-2/3">
-                                <h3 class="font-bold text-xl text-gray-800 leading-tight">${d.n}</h3>
-                                <p class="text-xs text-gray-500 mt-1">📍 ${d.l}</p>
-                            </div>
-                            <div class="bg-red-50 px-4 py-2 rounded-2xl text-center border border-red-100">
-                                <p class="text-[10px] text-red-400 font-bold uppercase mb-1">গ্রুপ</p>
-                                <p class="text-2xl font-black text-red-600 leading-none">${d.g}</p>
+            if (diffDays >=
                             </div>
                         </div>
                         <div class="grid grid-cols-2 gap-3 mb-5 text-center text-[10px]">
