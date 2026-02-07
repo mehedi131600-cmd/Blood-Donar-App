@@ -1,3 +1,5 @@
+</body>
+</html>
 <!DOCTYPE html>
 <html lang="bn">
 <head>
@@ -29,7 +31,7 @@
     </div>
 
     <div id="adminModal" class="fixed inset-0 bg-black/70 hidden z-50 flex items-center justify-center p-4">
-        <div class="bg-white p-6 rounded-3xl w-full max-sm text-center shadow-2xl">
+        <div class="bg-white p-6 rounded-3xl w-full max-w-sm text-center shadow-2xl">
             <h2 class="font-bold mb-4">অ্যাডমিন প্রবেশ</h2>
             <input type="password" id="adminPass" placeholder="পাসওয়ার্ড দিন" class="w-full p-3 border rounded-xl mb-4 text-center outline-none border-gray-200">
             <button onclick="loginAdmin()" class="w-full bg-red-600 text-white py-2 rounded-xl font-bold">প্রবেশ</button>
@@ -46,7 +48,10 @@
                 <option value="A-">A-</option><option value="B-">B-</option><option value="O-">O-</option><option value="AB-">AB-</option>
             </select>
             <input type="text" id="mPhone" placeholder="মোবাইল নম্বর" class="w-full p-3 border rounded-xl text-sm border-gray-200">
-            <input type="date" id="mDate" class="w-full p-3 border rounded-xl text-sm border-gray-200">
+            <div>
+                <label class="text-[10px] text-gray-400 ml-2">শেষ রক্তদানের তারিখ (না থাকলে ফাঁকা রাখুন)</label>
+                <input type="date" id="mDate" class="w-full p-3 border rounded-xl text-sm border-gray-200">
+            </div>
             <button onclick="saveDonor()" id="mSaveBtn" class="w-full bg-green-600 text-white py-3 rounded-xl font-bold shadow-lg">জমা দিন</button>
         </div>
     </div>
@@ -77,7 +82,6 @@
                 document.getElementById('adminLoginBtn').classList.add('hidden');
                 document.getElementById('logoutBtn').classList.remove('hidden');
                 displayDonors(allDonors);
-                alert("অ্যাডমিন মোড চালু হয়েছে!");
             } else { alert("ভুল পাসওয়ার্ড!"); }
         }
 
@@ -93,24 +97,28 @@
             if(!data.name || !data.phone) return alert("নাম ও ফোন নম্বর দিন!");
             btn.innerText = "সেভ হচ্ছে..."; btn.disabled = true;
             await fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify(data) });
-            alert("সফল হয়েছে! ১ মিনিট পর আপডেট হবে।");
+            alert("সফলভাবে যোগ করা হয়েছে!");
             location.reload();
         }
 
+        // সাথে সাথে ডিলিট করার ফাংশন
         async function deleteDonor(rowId) {
             if(confirm("আপনি কি নিশ্চিতভাবে এই ডোনার ডিলিট করতে চান?")) {
-                await fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify({action: 'delete', rowId: rowId}) });
-                alert("ডিলিট কমান্ড পাঠানো হয়েছে! ১ মিনিট পর চেক করুন।");
-                location.reload();
+                // সাথে সাথে লিস্ট থেকে সরিয়ে ফেলবে (UI আপডেট)
+                allDonors = allDonors.filter(d => d.rowId !== rowId);
+                displayDonors(allDonors);
+                
+                // ব্যাকগ্রাউন্ডে গুগল শিট থেকে ডিলিট করবে
+                fetch(url, { method: 'POST', mode: 'no-cors', body: JSON.stringify({action: 'delete', rowId: rowId}) });
             }
         }
 
         function getStatus(lastDateStr) {
-            if (!lastDateStr || lastDateStr.trim() === "" || lastDateStr === "undefined") {
-                return { text: "N/A", class: "text-gray-400 bg-gray-50", last: "প্রথমবার দিবে" };
+            if (!lastDateStr || lastDateStr.trim() === "" || lastDateStr === "undefined" || lastDateStr === "N/A") {
+                return { text: "N/A", class: "text-gray-400 bg-gray-50 border-gray-100", last: "তারিখ আপডেট করা হয়নি" };
             }
             const lastDate = new Date(lastDateStr);
-            if (isNaN(lastDate)) return { text: "N/A", class: "text-gray-400 bg-gray-50", last: "N/A" };
+            if (isNaN(lastDate)) return { text: "N/A", class: "text-gray-400 bg-gray-50", last: "ভুল তারিখ" };
             const diffDays = Math.floor((new Date() - lastDate) / (1000 * 60 * 60 * 24));
             const formatted = lastDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
             if (diffDays >= 90) return { text: "রক্ত দিতে পারবে", class: "text-green-600 bg-green-50 border-green-100", last: formatted };
@@ -124,7 +132,7 @@
                 displayDonors(allDonors);
                 document.getElementById('loading').classList.add('hidden');
                 document.getElementById('donorList').classList.remove('hidden');
-            } catch (e) { document.getElementById('loading').innerText = "সার্ভার লোড হচ্ছে, একটু পর রিফ্রেশ দিন।"; }
+            } catch (e) { document.getElementById('loading').innerText = "ডাটা লোড হচ্ছে..."; }
         }
 
         function displayDonors(data) {
@@ -132,7 +140,7 @@
             list.innerHTML = "";
             data.forEach(d => {
                 const status = getStatus(d.last);
-                let delBtn = isAdmin ? `<button onclick="deleteDonor(${d.rowId})" class="mt-2 w-full text-red-600 text-[10px] font-bold border border-red-100 py-2 rounded-xl bg-red-50">🗑 ডোনার ডিলিট করুন</button>` : "";
+                let delBtn = isAdmin ? `<button onclick="deleteDonor(${d.rowId})" class="mt-2 w-full text-red-600 text-[10px] font-bold border border-red-100 py-2 rounded-xl bg-red-50 active:bg-red-200">🗑 ডোনার ডিলিট করুন</button>` : "";
                 
                 list.innerHTML += `
                 <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 mb-2">
@@ -143,14 +151,14 @@
                     <div class="grid grid-cols-2 gap-3 mb-4 text-center">
                         <div class="bg-slate-50 p-2 rounded-xl border border-slate-100">
                             <p class="text-[8px] uppercase font-bold text-slate-400">শেষ রক্তদান</p>
-                            <p class="text-[11px] font-bold text-slate-700">${status.last}</p>
+                            <p class="text-[10px] font-bold text-slate-700">${status.last}</p>
                         </div>
                         <div class="${status.class} p-2 rounded-xl border">
                             <p class="text-[8px] uppercase font-bold opacity-70">অবস্থা</p>
                             <p class="text-[11px] font-bold">${status.text}</p>
                         </div>
                     </div>
-                    <a href="tel:${d.p}" class="block w-full bg-red-600 text-white py-3 rounded-2xl font-bold text-center text-sm shadow-md active:scale-95 transition-all">📞 কল দিন</a>
+                    <a href="tel:${d.p}" class="block w-full bg-red-600 text-white py-3 rounded-2xl font-bold text-center text-sm shadow-md">📞 কল দিন</a>
                     ${delBtn}
                 </div>`;
             });
