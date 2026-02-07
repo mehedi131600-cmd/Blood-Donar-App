@@ -50,7 +50,6 @@
     <div id="donorList" class="p-4 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 hidden"></div>
 
     <script>
-        // আপনার Apps Script URL
         const url = "https://script.google.com/macros/s/AKfycbzbHWB2_5S77EH29tXH9JGIZD7CiotsAYtUl778hn36ymr2OoQ_-N31X8K_NNr7uOag/exec"; 
         let allDonors = [];
 
@@ -60,7 +59,6 @@
                 const response = await fetch(url);
                 const data = await response.json();
                 
-                // শিটের কলাম যাই হোক ডাটা ম্যাপ করার চেষ্টা
                 allDonors = data.map(d => ({
                     n: d.n || d.Name || d.name || "অজানা নাম",
                     l: d.l || d.Location || d.address || "ঠিকানা নেই",
@@ -77,19 +75,21 @@
                     loadingDiv.innerHTML = "শিটে কোনো ডাটা নেই!";
                 }
             } catch (e) { 
-                loadingDiv.innerHTML = "<p class='text-red-500'>তথ্য পাওয়া যাচ্ছে না। Apps Script পারমিশন চেক করুন।</p>"; 
+                loadingDiv.innerHTML = "<p class='text-red-500'>তথ্য পাওয়া যাচ্ছে না।</p>"; 
             }
         }
 
         function getStatus(lastDateStr) {
-            if (!lastDateStr || lastDateStr.trim() === "" || lastDateStr === "undefined") {
-                return { text: "N/A", class: "text-gray-400 bg-gray-50", last: "আপডেট নেই" };
+            if (!lastDateStr || lastDateStr.trim() === "" || lastDateStr === "undefined" || lastDateStr === "N/A") {
+                return { text: "রক্ত দিতে পারবে", class: "text-green-600 bg-green-50 border-green-200", last: "তারিখ নেই" };
             }
             const lastDate = new Date(lastDateStr);
-            if (isNaN(lastDate)) return { text: "N/A", class: "text-gray-400 bg-gray-50", last: "আপডেট নেই" };
+            if (isNaN(lastDate)) return { text: "রক্ত দিতে পারবে", class: "text-green-600 bg-green-50 border-green-200", last: "তারিখ নেই" };
+            
             const diffDays = Math.floor((new Date() - lastDate) / (1000 * 60 * 60 * 24));
             const formatted = lastDate.toLocaleDateString('en-GB', { day: '2-digit', month: 'short', year: 'numeric' });
-            if (diffDays >= 90) return { text: "প্রস্তুত", class: "text-green-600 bg-green-50 border-green-200", last: formatted };
+            
+            if (diffDays >= 90) return { text: "রক্ত দিতে পারবে", class: "text-green-600 bg-green-50 border-green-200", last: formatted };
             return { text: (90 - diffDays) + " দিন বাকি", class: "text-red-600 bg-red-50 border-red-200", last: formatted };
         }
 
@@ -107,13 +107,13 @@
                             <p class="text-sm text-gray-500 font-semibold">📍 ${d.l}</p>
                         </div>
                     </div>
-                    <div class="grid grid-cols-2 gap-4 mb-6">
-                        <div class="bg-gray-50 p-3 rounded-2xl text-center shadow-sm">
-                            <p class="text-[9px] uppercase font-black text-gray-400">শেষ রক্তদান</p>
+                    <div class="grid grid-cols-2 gap-4 mb-6 text-center">
+                        <div class="bg-gray-50 p-3 rounded-2xl shadow-sm border border-gray-100">
+                            <p class="text-[9px] uppercase font-black text-gray-400 tracking-wider">শেষ রক্তদান</p>
                             <p class="text-[11px] font-bold text-gray-700">${status.last}</p>
                         </div>
-                        <div class="${status.class} p-3 rounded-2xl text-center shadow-sm border">
-                            <p class="text-[9px] uppercase font-black opacity-60">অবস্থা</p>
+                        <div class="${status.class} p-3 rounded-2xl shadow-sm border">
+                            <p class="text-[9px] uppercase font-black opacity-60 tracking-wider">অবস্থা</p>
                             <p class="text-[11px] font-bold">${status.text}</p>
                         </div>
                     </div>
@@ -135,3 +135,4 @@
     </script>
 </body>
 </html>
+
