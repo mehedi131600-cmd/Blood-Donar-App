@@ -56,15 +56,23 @@
             <p id="lErr" class="text-red-500 text-xs mt-3 hidden font-bold"></p>
             
             <div class="mt-8 pt-6 border-t-2 border-dashed border-gray-100">
-                <div class="bg-red-50 p-4 rounded-2xl mb-4 text-center">
-                    <h3 class="text-sm font-black text-gray-800">প্রতিষ্ঠাতা পরিচালক</h3>
-                    <p class="text-base font-bold text-red-600 mt-1">মোঃ মেহেদী হাসান</p>
-                    <div class="flex justify-center gap-2 mt-3">
-                        <a href="https://wa.me/8801888354739" target="_blank" class="bg-white text-green-600 px-4 py-2 rounded-xl text-xs font-bold shadow-sm">WhatsApp</a>
-                        <a href="https://www.facebook.com/mdmehedihasan.mehedi.54922" target="_blank" class="bg-white text-blue-700 px-4 py-2 rounded-xl text-xs font-bold shadow-sm">Facebook</a>
+                <div class="bg-red-50 p-5 rounded-[30px] mb-4 text-center border border-red-100">
+                    <h3 class="text-sm font-black text-gray-500 uppercase tracking-widest">প্রতিষ্ঠাতা পরিচালক</h3>
+                    <p class="text-xl font-black text-red-600 mt-1">মোঃ মেহেদী হাসান</p>
+                    
+                    <div class="flex items-center justify-center gap-3 mt-3 bg-white p-2 rounded-2xl shadow-sm border border-red-50">
+                        <span class="text-sm font-bold text-gray-700">মোবাইলঃ 01888354739</span>
+                        <a href="tel:01888354739" class="bg-green-500 text-white p-2 rounded-full shadow-md active:scale-75 transition-transform">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                        </a>
+                    </div>
+
+                    <div class="flex justify-center gap-2 mt-4">
+                        <a href="https://wa.me/8801888354739" target="_blank" class="flex-1 bg-white text-green-600 py-2 rounded-xl text-xs font-black shadow-sm border border-green-100">WhatsApp</a>
+                        <a href="https://www.facebook.com/Mehedi.1316" target="_blank" class="flex-1 bg-white text-blue-700 py-2 rounded-xl text-xs font-black shadow-sm border border-blue-100">Facebook</a>
                     </div>
                 </div>
-                <a href="https://facebook.com/groups/jubokolyan.bdf/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-2xl font-bold text-xs shadow-md mb-3">👥 ফেসবুক গ্রুপে জয়েন করুন</a>
+                <a href="https://facebook.com/groups/jubokolyan.bdf/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 text-white py-4 rounded-2xl font-black text-sm shadow-md mb-3">👥 ফেসবুক গ্রুপে জয়েন করুন</a>
             </div>
         </div>
     </div>
@@ -82,7 +90,7 @@
             </select>
             <input type="text" id="regLoc" placeholder="ঠিকানা (গ্রাম, উপজেলা, জেলা)" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
             <input type="tel" id="regPhone" placeholder="মোবাইল নম্বর" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
-            <p class="text-[10px] text-gray-500 mb-1 px-1">সর্বশেষ রক্তদান (না দিয়ে থাকলে ফাঁকা রাখুন)</p>
+            <p class="text-[10px] text-gray-500 mb-1 px-1 font-bold">সর্বশেষ রক্তদান (না দিয়ে থাকলে ফাঁকা রাখুন)</p>
             <input type="date" id="regLast" class="w-full p-3 mb-5 border rounded-xl font-bold bg-gray-50">
             <button onclick="handleRegister()" id="rBtn" class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold shadow-lg">রেজিস্ট্রেশন সম্পন্ন করুন</button>
             <button onclick="location.reload()" class="w-full text-gray-500 mt-4 text-sm font-bold">ফিরে যান</button>
@@ -90,7 +98,7 @@
     </div>
 
     <div id="mainPage" class="hidden">
-        <div class="hero-gradient text-white p-5 rounded-b-[35px] text-center relative mb-4">
+        <div class="hero-gradient text-white p-5 rounded-b-[35px] text-center relative mb-4 shadow-lg">
             <button onclick="location.reload()" class="absolute top-4 right-4 text-[10px] bg-white/20 px-3 py-1 rounded-full border border-white/30">লগ আউট</button>
             <p id="welcome" class="text-xs font-bold text-yellow-200"></p>
         </div>
