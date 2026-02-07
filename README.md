@@ -10,7 +10,6 @@
         body { font-family: 'Hind Siliguri', sans-serif; background-color: #f1f5f9; }
         .hero-gradient { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }
         .one-line { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-        /* কার্ড বড় করার জন্য কাস্টম প্যাডিং */
         .container-custom { width: 100%; padding-left: 10px; padding-right: 10px; max-width: 500px; margin: 0 auto; }
     </style>
 </head>
@@ -19,13 +18,13 @@
     <div class="bg-white p-5 shadow-md border-b-2 border-red-100 text-center flex flex-col items-center mb-4">
         <img src="https://i.ibb.co/C3m2X9Y/1000001730.png" class="w-24 h-24 mb-3 rounded-full border-4 border-red-50 shadow-lg">
         <h1 class="text-2xl font-black text-red-600 leading-tight">যুব কল্যাণ রক্তদান ফাউন্ডেশন</h1>
-        <a href="https://facebook.com/groups/jubokolyan.bdf/" target="_blank" class="mt-3 inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-full text-xs font-bold shadow-md active:scale-95 transition-all">
+        <a href="https://facebook.com/groups/jubokolyan.bdf/" target="_blank" class="mt-3 inline-flex items-center gap-2 bg-blue-600 text-white px-6 py-2 rounded-full text-xs font-bold shadow-md">
             আমাদের ফেসবুক গ্রুপ
         </a>
     </div>
 
     <div id="loginPage" class="container-custom flex flex-col items-center pt-4">
-        <div class="bg-white p-8 rounded-[40px] shadow-xl w-full text-center border border-gray-100">
+        <div class="bg-white p-6 rounded-[40px] shadow-xl w-full text-center border border-gray-100">
             <h2 class="text-xl font-bold text-gray-800 mb-6">প্যানেলে প্রবেশ করুন</h2>
             
             <div class="flex justify-center gap-2 mb-6 p-1 bg-gray-100 rounded-2xl">
@@ -45,8 +44,23 @@
             <p id="lErr" class="text-red-500 text-[10px] mt-4 font-bold hidden"></p>
 
             <div class="mt-8 pt-6 border-t border-gray-100">
-                <h3 class="text-xs font-black text-gray-700">প্রতিষ্ঠাতা পরিচালকঃ মোঃ মেহেদী হাসান</h3>
-                <a href="tel:01888354739" class="mt-3 flex items-center justify-center gap-2 bg-blue-50 text-blue-700 py-3 rounded-2xl font-bold text-sm border border-blue-100">📞 01888354739</a>
+                <p class="text-[11px] text-gray-400 font-bold mb-3 uppercase tracking-wider">যেকোনো প্রয়োজনে যোগাযোগ করুন</p>
+                <h3 class="text-sm font-black text-gray-700">প্রতিষ্ঠাতা পরিচালকঃ মোঃ মেহেদী হাসান</h3>
+                
+                <div class="grid grid-cols-1 gap-2 mt-4">
+                    <a href="tel:01888354739" class="flex items-center justify-center gap-2 bg-blue-50 text-blue-700 py-3 rounded-2xl font-bold text-sm border border-blue-100">
+                        📞 01888354739
+                    </a>
+                    
+                    <div class="grid grid-cols-2 gap-2">
+                        <a href="https://wa.me/8801888354739" target="_blank" class="flex items-center justify-center gap-2 bg-green-50 text-green-700 py-3 rounded-2xl text-[11px] font-bold border border-green-100">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" class="w-4 h-4"> হোয়াটসঅ্যাপ
+                        </a>
+                        <a href="https://www.facebook.com/Mehedi.1316" target="_blank" class="flex items-center justify-center gap-2 bg-indigo-50 text-indigo-700 py-3 rounded-2xl text-[11px] font-bold border border-indigo-100">
+                            <img src="https://upload.wikimedia.org/wikipedia/commons/b/b8/2021_Facebook_icon.svg" class="w-4 h-4"> ফেসবুক
+                        </a>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
