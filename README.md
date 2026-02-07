@@ -98,18 +98,21 @@
     </div>
 
     <div id="mainPage" class="hidden">
-        <div class="hero-gradient text-white p-5 rounded-b-[35px] text-center relative mb-4 shadow-lg">
-            <button onclick="location.reload()" class="absolute top-4 right-4 text-[10px] bg-white/20 px-3 py-1 rounded-full border border-white/30">লগ আউট</button>
-            <p id="welcome" class="text-xs font-bold text-yellow-200"></p>
+        <div class="hero-gradient text-white p-8 rounded-b-[40px] text-center relative mb-6 shadow-xl border-b-4 border-red-700">
+            <button onclick="location.reload()" class="absolute top-4 right-4 text-[11px] bg-white/20 px-3 py-1 rounded-full border border-white/30 hover:bg-white/40 font-bold transition-all">লগ আউট</button>
+            <div class="mt-2">
+                <h2 id="welcome" class="text-2xl font-black text-yellow-300 drop-shadow-md"></h2>
+                <p class="text-xs mt-1 text-white/80 font-bold tracking-widest uppercase">যুব কল্যাণ রক্তদান ফাউন্ডেশন</p>
+            </div>
         </div>
         <div class="container-custom mb-4">
-            <input type="text" id="searchInput" onkeyup="filterDonors()" placeholder="নাম বা গ্রুপ দিয়ে খুঁজুন..." class="w-full p-4 rounded-2xl border-none shadow-md font-bold">
+            <input type="text" id="searchInput" onkeyup="filterDonors()" placeholder="নাম বা গ্রুপ দিয়ে খুঁজুন..." class="w-full p-4 rounded-2xl border-none shadow-md font-bold focus:ring-2 focus:ring-red-500 outline-none">
         </div>
         <div id="donorList" class="container-custom grid gap-6"></div>
     </div>
 
     <div id="editModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-[100] backdrop-blur-sm">
-        <div class="bg-white p-6 rounded-[35px] w-full max-w-sm text-center shadow-2xl">
+        <div class="bg-white p-6 rounded-[35px] w-full max-sm:max-w-xs text-center shadow-2xl">
             <h3 id="editingName" class="font-bold text-gray-800 mb-4 text-lg"></h3>
             <input type="date" id="newDate" class="w-full p-4 border rounded-2xl mb-6 text-center font-bold bg-gray-50">
             <div class="flex gap-2">
@@ -159,7 +162,8 @@
         function showMain() {
             document.getElementById('loginPage').classList.add('hidden');
             document.getElementById('mainPage').classList.remove('hidden');
-            document.getElementById('welcome').innerText = "স্বাগতম: " + (loggedUser.n || "");
+            // স্বাগতম মেসেজ আপডেট
+            document.getElementById('welcome').innerText = "স্বাগতম, " + (loggedUser.n || "");
             renderDonors(allDonors);
         }
 
