@@ -14,12 +14,10 @@
         .info-label { font-weight: 800; color: #4b5563; min-width: 115px; font-size: 14px; }
         .info-value { font-weight: 700; font-size: 14px; flex: 1; }
         
-        /* কার্ড বর্ডার কালার */
         .card-0 { border-top-color: #dc2626; } .card-1 { border-top-color: #2563eb; }
         .card-2 { border-top-color: #059669; } .card-3 { border-top-color: #7c3aed; }
         .card-4 { border-top-color: #db2777; }
         
-        /* সিরিয়াল নাম্বার স্টাইল - কালারিং ও গাঢ় */
         .sl-text-0 { color: #dc2626; } .sl-text-1 { color: #2563eb; }
         .sl-text-2 { color: #059669; } .sl-text-3 { color: #7c3aed; }
         .sl-text-4 { color: #db2777; }
@@ -48,7 +46,13 @@
             <div id="adminFields" class="hidden">
                 <input type="password" id="uPass" placeholder="এডমিন পাসওয়ার্ড" class="w-full p-4 mb-4 border rounded-2xl text-center font-bold outline-none focus:border-red-500 bg-gray-50">
             </div>
-            <button onclick="handleLogin()" id="lBtn" class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold shadow-lg">লগইন করুন</button>
+            <button onclick="handleLogin()" id="lBtn" class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold shadow-lg mb-6">লগইন করুন</button>
+            
+            <div class="flex flex-col items-center gap-0 border-t pt-4 border-dashed border-gray-200">
+                <p class="text-[11px] font-bold text-gray-500">সদস্য না হয়ে থাকলে</p>
+                <button onclick="showReg()" class="text-xl font-black text-red-600 active:scale-95 transition-transform">রেজিস্ট্রেশন করুন</button>
+            </div>
+
             <p id="lErr" class="text-red-500 text-xs mt-3 hidden font-bold"></p>
             
             <div class="mt-8 pt-6 border-t-2 border-dashed border-gray-100">
@@ -62,7 +66,6 @@
                 </div>
                 <a href="https://facebook.com/groups/jubokolyan.bdf/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-2xl font-bold text-xs shadow-md mb-3">👥 ফেসবুক গ্রুপে জয়েন করুন</a>
             </div>
-            <button onclick="showReg()" class="text-blue-600 font-bold text-sm underline mt-2">নতুন মেম্বার রেজিস্ট্রেশন</button>
         </div>
     </div>
 
@@ -82,7 +85,7 @@
             <p class="text-[10px] text-gray-500 mb-1 px-1">সর্বশেষ রক্তদান (না দিয়ে থাকলে ফাঁকা রাখুন)</p>
             <input type="date" id="regLast" class="w-full p-3 mb-5 border rounded-xl font-bold bg-gray-50">
             <button onclick="handleRegister()" id="rBtn" class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold shadow-lg">রেজিস্ট্রেশন সম্পন্ন করুন</button>
-            <button onclick="location.reload()" class="w-full text-gray-500 mt-4 text-sm font-bold font-black">ফিরে যান</button>
+            <button onclick="location.reload()" class="w-full text-gray-500 mt-4 text-sm font-bold">ফিরে যান</button>
         </div>
     </div>
 
