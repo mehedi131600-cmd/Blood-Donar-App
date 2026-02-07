@@ -14,6 +14,7 @@
         .info-label { font-weight: 800; color: #4b5563; min-width: 115px; font-size: 14px; }
         .info-value { font-weight: 700; font-size: 14px; flex: 1; }
         
+        /* কার্ড ডিজাইন */
         .card-0 { border-top-color: #dc2626; } .card-1 { border-top-color: #2563eb; }
         .card-2 { border-top-color: #059669; } .card-3 { border-top-color: #7c3aed; }
         .card-4 { border-top-color: #db2777; }
@@ -48,10 +49,7 @@
             </div>
             <button onclick="handleLogin()" id="lBtn" class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold">লগইন করুন</button>
             <p id="lErr" class="text-red-500 text-xs mt-3 hidden font-bold"></p>
-            <div class="mt-6 pt-5 border-t">
-                <button onclick="showReg()" class="text-blue-600 font-bold text-sm underline">নতুন মেম্বার রেজিস্ট্রেশন</button>
-            </div>
-
+            
             <div class="mt-8 pt-6 border-t-2 border-dashed border-gray-100">
                 <div class="bg-red-50 p-4 rounded-2xl mb-4 text-center">
                     <h3 class="text-sm font-black text-gray-800">প্রতিষ্ঠাতা পরিচালক</h3>
@@ -63,6 +61,7 @@
                 </div>
                 <a href="https://facebook.com/groups/jubokolyan.bdf/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-2xl font-bold text-xs shadow-md mb-3">👥 ফেসবুক গ্রুপে জয়েন করুন</a>
             </div>
+            <button onclick="showReg()" class="text-blue-600 font-bold text-sm underline mt-2">নতুন মেম্বার রেজিস্ট্রেশন</button>
         </div>
     </div>
 
@@ -79,10 +78,10 @@
             </select>
             <input type="text" id="regLoc" placeholder="ঠিকানা (গ্রাম, উপজেলা, জেলা)" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
             <input type="tel" id="regPhone" placeholder="মোবাইল নম্বর" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
-            <p class="text-[10px] text-gray-500 mb-1">সর্বশেষ রক্তদান (না দিয়ে থাকলে ফাঁকা রাখুন)</p>
+            <p class="text-[10px] text-gray-500 mb-1">সর্বশেষ রক্তদান (ঐচ্ছিক)</p>
             <input type="date" id="regLast" class="w-full p-3 mb-5 border rounded-xl font-bold bg-gray-50">
             <button onclick="handleRegister()" id="rBtn" class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold shadow-lg">রেজিস্ট্রেশন সম্পন্ন করুন</button>
-            <button onclick="location.reload()" class="w-full text-gray-500 mt-4 text-sm font-bold font-black underline">ফিরে যান</button>
+            <button onclick="location.reload()" class="w-full text-gray-500 mt-4 text-sm font-bold">ফিরে যান</button>
         </div>
     </div>
 
@@ -100,11 +99,10 @@
     <div id="editModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-[100] backdrop-blur-sm">
         <div class="bg-white p-6 rounded-[35px] w-full max-w-sm text-center shadow-2xl">
             <h3 id="editingName" class="font-bold text-gray-800 mb-4 text-lg"></h3>
-            <p class="text-xs text-gray-500 mb-2 font-bold">নতুন রক্তদানের তারিখ দিন</p>
             <input type="date" id="newDate" class="w-full p-4 border rounded-2xl mb-6 text-center font-bold bg-gray-50">
             <div class="flex gap-2">
-                <button onclick="closeEdit()" class="flex-1 bg-gray-100 py-3 rounded-2xl font-bold text-gray-600">বাতিল</button>
-                <button onclick="submitUpdate()" id="sBtn" class="flex-1 bg-green-600 text-white py-3 rounded-2xl font-bold">সেভ করুন</button>
+                <button onclick="closeEdit()" class="flex-1 bg-gray-100 py-3 rounded-2xl font-bold">বাতিল</button>
+                <button onclick="submitUpdate()" id="sBtn" class="flex-1 bg-green-600 text-white py-3 rounded-2xl font-bold">সেভ</button>
             </div>
         </div>
     </div>
@@ -158,29 +156,17 @@
             renderDonors(allDonors.filter(d => d.n.toLowerCase().includes(term) || d.g.toLowerCase().includes(term) || d.l.toLowerCase().includes(term)));
         }
 
-        // তারিখ স্ট্যাটাস আপডেট
         function calculateStatus(dateStr) {
             if(!dateStr || dateStr === "" || dateStr === "undefined" || dateStr === "Invalid Date") {
-                return { 
-                    last: "আপনার তথ্যটি আপডেট করে নিন", 
-                    next: "আপডেট প্রয়োজন ❌" 
-                };
+                return { last: "আপনার তথ্যটি আপডেট করে নিন", next: "আপডেট প্রয়োজন ❌" };
             }
             const lastDate = new Date(dateStr);
             if (isNaN(lastDate.getTime())) {
-                return { 
-                    last: "আপনার তথ্যটি আপডেট করে নিন", 
-                    next: "আপডেট প্রয়োজন ❌" 
-                };
+                return { last: "আপনার তথ্যটি আপডেট করে নিন", next: "আপডেট প্রয়োজন ❌" };
             }
             const diffDays = Math.floor((new Date() - lastDate) / (1000 * 60 * 60 * 24));
             const fmt = lastDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-            
-            if (diffDays >= 90) {
-                return { last: fmt, next: "রক্ত দিতে পারবে ✅" };
-            } else {
-                return { last: fmt, next: (90 - diffDays) + " দিন বাকী" };
-            }
+            return diffDays >= 90 ? { last: fmt, next: "রক্ত দিতে পারবে ✅" } : { last: fmt, next: (90 - diffDays) + " দিন বাকী" };
         }
 
         function renderDonors(data) {
@@ -190,9 +176,10 @@
                 const isMe = (loggedUser.role === 'Member' && String(d.p).slice(-10) === String(loggedUser.p).slice(-10));
                 const isAdmin = (loggedUser.role === 'Admin');
                 
+                // এখানে d.g = রক্তের গ্রুপ এবং d.l = ঠিকানা নিশ্চিত করা হয়েছে
                 list.innerHTML += `
                 <div class="bg-white p-5 rounded-[30px] shadow-sm border-t-[6px] card-${cIdx} relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-lg">${d.g}</div>
+                    <div class="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-lg shadow-sm">${d.g}</div>
                     <div class="mt-2 space-y-1">
                         <div class="info-row"><span class="info-label text-xs">সিরিয়াল নংঃ</span><span class="px-2 py-0.5 rounded-full text-[10px] font-black sl-${cIdx}">সিরিয়াল নংঃ ${String(index+1).padStart(2,'0')}</span></div>
                         <div class="info-row"><span class="info-label">নামঃ</span><span class="text-xl font-black text-gray-900 leading-tight">${d.n}</span></div>
