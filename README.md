@@ -14,7 +14,6 @@
         .info-label { font-weight: 800; color: #4b5563; min-width: 115px; font-size: 14px; }
         .info-value { font-weight: 700; font-size: 14px; flex: 1; }
         
-        /* কার্ড ডিজাইন */
         .card-0 { border-top-color: #dc2626; } .card-1 { border-top-color: #2563eb; }
         .card-2 { border-top-color: #059669; } .card-3 { border-top-color: #7c3aed; }
         .card-4 { border-top-color: #db2777; }
@@ -158,11 +157,11 @@
 
         function calculateStatus(dateStr) {
             if(!dateStr || dateStr === "" || dateStr === "undefined" || dateStr === "Invalid Date") {
-                return { last: "আপনার তথ্যটি আপডেট করুন", next: "আপডেট প্রয়োজন ❌" };
+                return { last: "আপনার তথ্যটি আপডেট করে নিন", next: "আপডেট প্রয়োজন ❌" };
             }
             const lastDate = new Date(dateStr);
             if (isNaN(lastDate.getTime())) {
-                return { last: "আপনার তথ্যটি আপডেট করুন", next: "আপডেট প্রয়োজন ❌" };
+                return { last: "আপনার তথ্যটি আপডেট করে নিন", next: "আপডেট প্রয়োজন ❌" };
             }
             const diffDays = Math.floor((new Date() - lastDate) / (1000 * 60 * 60 * 24));
             const fmt = lastDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
@@ -176,12 +175,15 @@
                 const isMe = (loggedUser.role === 'Member' && String(d.p).slice(-10) === String(loggedUser.p).slice(-10));
                 const isAdmin = (loggedUser.role === 'Admin');
                 
-                // এখানে d.g = রক্তের গ্রুপ এবং d.l = ঠিকানা নিশ্চিত করা হয়েছে
+                // এখানে ম্যাপিং ফিক্স করা হয়েছে: d.g = রক্তের গ্রুপ, d.l = ঠিকানা
                 list.innerHTML += `
                 <div class="bg-white p-5 rounded-[30px] shadow-sm border-t-[6px] card-${cIdx} relative overflow-hidden">
                     <div class="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-lg shadow-sm">${d.g}</div>
                     <div class="mt-2 space-y-1">
-                        <div class="info-row"><span class="info-label text-xs">সিরিয়াল নংঃ</span><span class="px-2 py-0.5 rounded-full text-[10px] font-black sl-${cIdx}">সিরিয়াল নংঃ ${String(index+1).padStart(2,'0')}</span></div>
+                        <div class="info-row">
+                            <span class="info-label text-xs">সিরিয়াল নংঃ</span>
+                            <span class="px-2 py-0.5 rounded-full text-[10px] font-black sl-${cIdx}">${String(index+1).padStart(2,'0')}</span>
+                        </div>
                         <div class="info-row"><span class="info-label">নামঃ</span><span class="text-xl font-black text-gray-900 leading-tight">${d.n}</span></div>
                         <div class="info-row"><span class="info-label text-xs">ঠিকানাঃ</span><span class="info-value text-gray-500">${d.l}</span></div>
                         <div class="info-row"><span class="info-label text-xs">সর্বশেষ রক্তদানঃ</span><span class="info-value text-red-custom">${s.last}</span></div>
