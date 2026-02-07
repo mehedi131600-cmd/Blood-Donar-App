@@ -31,15 +31,34 @@
         </select>
     </div>
 
-    <div id="loading" class="text-center py-20 text-gray-400 animate-pulse">তথ্য লোড হচ্ছে...</div>
+    <div id="loading" class="text-center py-20 text-gray-400">তথ্য লোড হচ্ছে...</div>
     <div id="donorList" class="p-4 grid gap-4 hidden"></div>
 
     <script>
+        // আপনার সঠিক লিঙ্কটি এখানে দেওয়া হয়েছে
         const url = "https://script.google.com/macros/s/AKfycbzbHWB2_5S77EH29tXH9JGIZD7CiotsAYtUl778hn36ymr2OoQ_-N31X8K_NNr7uOag/exec"; 
-        let allDonors = [];
+
+        async function loadDonors() {
+            const loadingDiv = document.getElementById('loading');
+            try {
+                const response = await fetch(url);
+                const data = await response.json();
+                
+                if (data && data.length > 0) {
+                    displayDonors(data);
+                    loadingDiv.classList.add('hidden');
+                    document.getElementById('donorList').classList.remove('hidden');
+                } else {
+                    loadingDiv.innerText = "শিটে কোনো ডাটা নেই। অনুগ্রহ করে গুগল শিটে ডোনারের নাম যোগ করুন।";
+                }
+            } catch (e) { 
+                console.error(e);
+                loadingDiv.innerHTML = "<p class='text-red-500'>লিঙ্ক ত্রুটি! <br> আপনার Apps Script লিঙ্কটি চেক করুন অথবা 'Anyone' এক্সেস দিন।</p>"; 
+            }
+        }
 
         function getStatus(lastDateStr) {
-            if (!lastDateStr || lastDateStr.trim() === "" || lastDateStr === "undefined" || lastDateStr === "N/A") {
+            if (!lastDateStr || lastDateStr.trim() === "" || lastDateStr === "undefined") {
                 return { text: "N/A", class: "text-gray-400 bg-gray-50 border-gray-100", last: "তারিখ আপডেট করা হয়নি" };
             }
             const lastDate = new Date(lastDateStr);
@@ -52,12 +71,49 @@
             return { text: (90 - diffDays) + " দিন বাকি", class: "text-red-600 bg-red-50 border-red-100", last: formatted };
         }
 
-        async function loadDonors() {
-            try {
-                const response = await fetch(url);
-                allDonors = await response.json();
-                displayDonors(allDonors);
-                document.getElementById('loading').classList.add('hidden');
-                document.getElementById('donorList').classList.remove('hidden');
-            } catch (e) {
-            
+        function displayDonors(data) {
+            const list = document.getElementById('donorList');
+            list.innerHTML = "";
+            data.forEach(d => {
+                const status = getStatus(d.last);
+                list.innerHTML += `
+                <div class="bg-white p-5 rounded-3xl shadow-sm border border-gray-100 mb-2">
+                    <div class="flex justify-between items-start mb-2">
+                        <div class="w-2/3">
+                            <h3 class="font-bold text-xl text-gray-800">${d.n}</h3>
+                            <p class="text-sm text-gray-600 mt-1 font-semibold flex items-center gap-1">
+                                <span class="text-red-500">📍</span> ${d.l}
+                            </p>
+                        </div>
+                        <div class="bg-red-50 px-3 py-1 rounded-xl text-red-600 font-black text-2xl border border-red-100 shadow-sm">${d.g}</div>
+                    </div>
+                    <hr class="my-3 border-gray-50">
+                    <div class="grid grid-cols-2 gap-3 mb-4 text-center">
+                        <div class="bg-slate-50 p-2 rounded-xl border border-slate-100">
+                            <p class="text-[8px] uppercase font-bold text-slate-400">শেষ রক্তদান</p>
+                            <p class="text-[10px] font-bold text-slate-700">${status.last}</p>
+                        </div>
+                        <div class="${status.class} p-2 rounded-xl border">
+                            <p class="text-[8px] uppercase font-bold opacity-70">অবস্থা</p>
+                            <p class="text-[11px] font-bold">${status.text}</p>
+                        </div>
+                    </div>
+                    <a href="tel:${d.p}" class="block w-full bg-red-600 text-white py-3 rounded-2xl font-bold text-center text-sm shadow-md active:scale-95 transition-all">📞 কল দিন</a>
+                </div>`;
+            });
+        }
+
+        function filterDonors() {
+            let input = document.getElementById('searchInput').value.toLowerCase();
+            let group = document.getElementById('groupFilter').value;
+            let filtered = allDonors.filter(d => 
+                (String(d.n).toLowerCase().includes(input) || String(d.l).toLowerCase().includes(input)) && 
+                (group === "" || String(d.g).trim() === group)
+            );
+            displayDonors(filtered);
+        }
+
+        loadDonors();
+    </script>
+</body>
+</html>
