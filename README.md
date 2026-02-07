@@ -10,23 +10,24 @@
         body { font-family: 'Hind Siliguri', sans-serif; background-color: #f1f5f9; }
         .hero-gradient { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }
         .container-custom { width: 100%; padding-left: 10px; padding-right: 10px; max-width: 500px; margin: 0 auto; }
-        .info-row { display: flex; border-bottom: 1px solid rgba(0,0,0,0.05); padding: 8px 0; align-items: flex-start; }
-        .info-label { font-weight: 800; color: #4b5563; min-width: 110px; font-size: 14px; }
-        .info-value { font-weight: 700; color: #1f2937; font-size: 14px; flex: 1; }
+        .info-row { display: flex; border-bottom: 1px solid rgba(0,0,0,0.05); padding: 8px 0; align-items: center; }
+        .info-label { font-weight: 800; color: #4b5563; min-width: 115px; font-size: 14px; }
+        .info-value { font-weight: 700; font-size: 14px; flex: 1; }
         
-        /* কার্ডের আলাদা আলাদা বর্ডার কালার */
-        .card-0 { border-top-color: #dc2626; } /* Red */
-        .card-1 { border-top-color: #2563eb; } /* Blue */
-        .card-2 { border-top-color: #059669; } /* Green */
-        .card-3 { border-top-color: #7c3aed; } /* Purple */
-        .card-4 { border-top-color: #db2777; } /* Pink */
+        /* কার্ডের বর্ডার কালার */
+        .card-0 { border-top-color: #dc2626; }
+        .card-1 { border-top-color: #2563eb; }
+        .card-2 { border-top-color: #059669; }
+        .card-3 { border-top-color: #7c3aed; }
+        .card-4 { border-top-color: #db2777; }
         
-        /* সিরিয়াল নং এর ব্যাকগ্রাউন্ড কালার */
         .sl-0 { background-color: #fee2e2; color: #dc2626; }
         .sl-1 { background-color: #dbeafe; color: #2563eb; }
         .sl-2 { background-color: #d1fae5; color: #059669; }
         .sl-3 { background-color: #f3e8ff; color: #7c3aed; }
         .sl-4 { background-color: #fce7f3; color: #db2777; }
+
+        .text-red-custom { color: #dc2626; }
     </style>
 </head>
 <body class="pb-20">
@@ -42,22 +43,14 @@
     <div id="loginPage" class="container-custom flex flex-col items-center pt-4">
         <div class="bg-white p-6 rounded-[40px] shadow-xl w-full text-center border border-gray-100">
             <h2 class="text-xl font-bold text-gray-800 mb-6">প্যানেলে প্রবেশ করুন</h2>
-            <div class="flex justify-center gap-2 mb-6 p-1 bg-gray-100 rounded-2xl">
-                <button onclick="setRole('Member')" id="roleMember" class="flex-1 py-3 rounded-xl text-xs font-bold bg-white text-red-600 shadow-sm">সদস্য</button>
-                <button onclick="setRole('Admin')" id="roleAdmin" class="flex-1 py-3 rounded-xl text-xs font-bold text-gray-500">এডমিন</button>
-            </div>
             <div id="memberFields">
                 <input type="tel" id="uPhone" placeholder="মোবাইল নম্বর লিখুন" class="w-full p-4 mb-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-red-500 bg-gray-50 text-center font-bold">
             </div>
-            <div id="adminFields" class="hidden">
-                <input type="password" id="uPass" placeholder="এডমিন পাসওয়ার্ড দিন" class="w-full p-4 mb-4 border-2 border-gray-100 rounded-2xl outline-none focus:border-red-500 bg-gray-50 text-center font-bold">
-            </div>
-            <button onclick="handleLogin()" id="lBtn" class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold shadow-lg active:scale-95 transition-all">লগইন করুন</button>
-            <p id="lErr" class="text-red-500 text-[10px] mt-4 font-bold hidden"></p>
-            <div class="mt-8 pt-6 border-t border-gray-100">
-                <p class="text-[11px] text-gray-400 font-bold mb-3 uppercase tracking-wider">যেকোনো প্রয়োজনে যোগাযোগ করুন</p>
-                <h3 class="text-sm font-black text-gray-700">প্রতিষ্ঠাতা পরিচালকঃ মোঃ মেহেদী হাসান</h3>
-                <a href="tel:01888354739" class="mt-3 flex items-center justify-center gap-2 bg-blue-50 text-blue-700 py-3 rounded-2xl font-bold text-sm border border-blue-100">📞 01888354739</a>
+            <button onclick="handleLogin()" class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold shadow-lg">লগইন করুন</button>
+            <div class="mt-8 pt-6 border-t border-gray-100 text-center">
+                 <p class="text-[11px] text-gray-400 font-bold mb-3 uppercase tracking-wider">যেকোনো প্রয়োজনে যোগাযোগ করুন</p>
+                 <h3 class="text-sm font-black text-gray-700">প্রতিষ্ঠাতা পরিচালকঃ মোঃ মেহেদী হাসান</h3>
+                 <a href="tel:01888354739" class="mt-3 inline-block text-blue-700 font-bold">📞 01888354739</a>
             </div>
         </div>
     </div>
@@ -77,45 +70,26 @@
         const scriptURL = "https://script.google.com/macros/s/AKfycbx2AUrExnRv7h2cMRlBv6nqpf3oNy5s9Bh0iKzGG3-5YhGC1NGDEWN7lsRmuaEHo92o/exec"; 
         let allDonors = [], loggedUser = null;
 
-        function setRole(role) {
-            const mFields = document.getElementById('memberFields'), aFields = document.getElementById('adminFields');
-            const mBtn = document.getElementById('roleMember'), aBtn = document.getElementById('roleAdmin');
-            if(role === 'Admin') {
-                aFields.classList.remove('hidden'); mFields.classList.add('hidden');
-                aBtn.className = "flex-1 py-3 rounded-xl text-xs font-bold bg-white text-red-600 shadow-sm";
-                mBtn.className = "flex-1 py-3 rounded-xl text-xs font-bold text-gray-500";
-            } else {
-                aFields.classList.add('hidden'); mFields.classList.remove('hidden');
-                mBtn.className = "flex-1 py-3 rounded-xl text-xs font-bold bg-white text-red-600 shadow-sm";
-                aBtn.className = "flex-1 py-3 rounded-xl text-xs font-bold text-gray-500";
-            }
-        }
-
         async function handleLogin() {
             const phone = document.getElementById('uPhone').value.trim();
-            const pass = document.getElementById('uPass').value.trim();
-            const err = document.getElementById('lErr');
-            err.innerText = "⏳ ডাটা যাচাই হচ্ছে..."; err.classList.remove('hidden');
+            if(!phone) return alert("নম্বর দিন!");
             try {
                 const res = await fetch(scriptURL);
                 allDonors = await res.json();
-                if(pass === 'Mehedi4739' || allDonors.find(d => String(d.p).slice(-10) === phone.slice(-10))) {
-                    loggedUser = pass === 'Mehedi4739' ? { n: "এডমিন", role: "Admin" } : { ...allDonors.find(d => String(d.p).slice(-10) === phone.slice(-10)), role: "Member" };
-                    showMain();
-                } else { err.innerText = "❌ সঠিক তথ্য দিন!"; }
-            } catch (e) { err.innerText = "❌ সার্ভার এরর!"; }
-        }
-
-        function showMain() {
-            document.getElementById('loginPage').classList.add('hidden');
-            document.getElementById('mainPage').classList.remove('hidden');
-            document.getElementById('welcome').innerText = "স্বাগতম: " + loggedUser.n;
-            renderDonors(allDonors);
+                const user = allDonors.find(d => String(d.p).slice(-10) === phone.slice(-10));
+                if(user || phone === "01888354739") {
+                    loggedUser = user || {n: "এডমিন", role: "Admin"};
+                    document.getElementById('loginPage').classList.add('hidden');
+                    document.getElementById('mainPage').classList.remove('hidden');
+                    document.getElementById('welcome').innerText = "স্বাগতম: " + (loggedUser.n || "মেম্বার");
+                    renderDonors(allDonors);
+                } else { alert("সঠিক নম্বর দিন!"); }
+            } catch (e) { alert("সার্ভার এরর!"); }
         }
 
         function filterDonors() {
             const term = document.getElementById('searchInput').value.toLowerCase();
-            const filtered = allDonors.filter(d => d.n.toLowerCase().includes(term) || d.g.toLowerCase().includes(term) || d.l.toLowerCase().includes(term));
+            const filtered = allDonors.filter(d => d.n.toLowerCase().includes(term) || d.g.toLowerCase().includes(term));
             renderDonors(filtered);
         }
 
@@ -123,64 +97,62 @@
             const list = document.getElementById('donorList');
             list.innerHTML = "";
             data.forEach((d, index) => {
-                const isMe = (loggedUser.role === 'Member' && String(d.p).slice(-10) === String(loggedUser.p).slice(-10));
-                const isAdmin = (loggedUser.role === 'Admin');
                 const status = calculateStatus(d.last);
-                const slNo = String(index + 1).padStart(2, '0');
-                
-                // কালার ইনডেক্স নির্ধারণ (০ থেকে ৪ পর্যন্ত ঘুরবে)
                 const colorIdx = index % 5;
+                const slNo = String(index + 1).padStart(2, '0');
 
                 list.innerHTML += `
                 <div class="bg-white p-5 rounded-[30px] shadow-sm border-t-[6px] card-${colorIdx} relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-gray-800 text-white px-5 py-2 rounded-bl-[20px] font-black text-xl shadow-md">${d.g}</div>
+                    <div class="absolute top-0 right-0 bg-red-600 text-white px-5 py-2 rounded-bl-[20px] font-black text-xl shadow-md">${d.g}</div>
                     
                     <div class="mt-2 space-y-1">
                         <div class="info-row">
                             <span class="info-label">সিরিয়াল নংঃ</span>
-                            <span class="px-3 py-0.5 rounded-full text-xs font-black sl-${colorIdx}">সিরিয়াল নংঃ ${slNo}</span>
+                            <span class="px-3 py-0.5 rounded-full text-[11px] font-black sl-${colorIdx}">সিরিয়াল নংঃ ${slNo}</span>
                         </div>
-                        <div class="info-row"><span class="info-label">নামঃ</span><span class="info-value text-gray-800">${d.n}</span></div>
+
+                        <div class="info-row">
+                            <span class="info-label">নামঃ</span>
+                            <span class="text-xl font-black text-gray-900 flex-1 leading-tight">${d.n}</span>
+                        </div>
+
                         <div class="info-row"><span class="info-label">ঠিকানাঃ</span><span class="info-value text-gray-600">${d.l}</span></div>
+                        
                         <div class="info-row">
                             <span class="info-label">সর্বশেষ রক্তদানঃ</span>
-                            <span class="info-value ${status.needsUpdate ? 'text-orange-500' : 'text-gray-700'}">${status.lastDate}</span>
+                            <span class="info-value text-red-custom">${status.lastDate}</span>
                         </div>
+                        
                         <div class="info-row">
                             <span class="info-label">পরবর্তী রক্তদানঃ</span>
-                            <span class="info-value ${status.canDonate ? 'text-green-600' : 'text-red-600'}">${status.txt}</span>
+                            <span class="info-value text-red-custom">${status.txt}</span>
                         </div>
+
                         <div class="info-row border-none">
                             <span class="info-label">মোবাইলঃ</span>
                             <div class="info-value flex items-center gap-3">
-                                <span class="text-blue-600 font-bold">${d.p}</span>
-                                <a href="tel:${d.p}" class="bg-green-500 text-white p-1.5 rounded-full shadow-md active:scale-90 transition-all">
+                                <span class="text-blue-600 font-bold text-base">${d.p}</span>
+                                <a href="tel:${d.p}" class="bg-green-500 text-white p-2 rounded-full shadow-md active:scale-90 transition-all">
                                     <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                                 </a>
                             </div>
                         </div>
                     </div>
-
-                    ${(isMe || isAdmin) ? `
-                    <button onclick="openEdit('${d.p}', '${d.n}')" class="mt-4 w-full bg-blue-600 text-white py-2 rounded-xl font-bold text-xs shadow-md">তথ্য আপডেট করুন</button>
-                    ` : ''}
                 </div>`;
             });
         }
 
         function calculateStatus(dateStr) {
-            if(!dateStr || dateStr === "তারিখ নেই" || dateStr === "undefined" || dateStr === "") {
-                return { lastDate: "দয়া করে আপডেট করে নিন", txt: "আপডেট প্রয়োজন", canDonate: false, needsUpdate: true };
+            if(!dateStr || dateStr === "" || dateStr === "undefined") {
+                return { lastDate: "দয়া করে আপডেট করে নিন", txt: "আপডেট প্রয়োজন" };
             }
             const last = new Date(dateStr);
             const diffDays = Math.floor((new Date() - last) / (1000 * 60 * 60 * 24));
             const formattedDate = last.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
             
-            if (diffDays >= 90) return { lastDate: formattedDate, txt: "রক্ত দিতে পারবে ✅", canDonate: true, needsUpdate: false };
-            return { lastDate: formattedDate, txt: (90 - diffDays) + " দিন বাকী", canDonate: false, needsUpdate: false };
+            if (diffDays >= 90) return { lastDate: formattedDate, txt: "রক্ত দিতে পারবে ✅" };
+            return { lastDate: formattedDate, txt: (90 - diffDays) + " দিন বাকী" };
         }
-
-        function openEdit(phone, name) { targetPhone = phone; window.alert("তথ্য এডিট করতে তারিখ সিলেক্ট করুন। (এডিট পপআপ এই ডেমোতে ডিজেবল থাকতে পারে)"); }
     </script>
 </body>
 </html>
