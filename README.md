@@ -34,75 +34,79 @@
     </div>
 
     <div id="loginPage" class="container-custom">
-        <div class="bg-white p-6 rounded-[35px] shadow-xl text-center border border-gray-100">
+        <div class="bg-white p-6 rounded-[35px] shadow-xl text-center border">
             <h2 class="text-lg font-bold text-gray-800 mb-5">লগইন করুন</h2>
-            
             <div class="flex gap-2 mb-4 p-1 bg-gray-100 rounded-xl">
                 <button onclick="setRole('Member')" id="roleMember" class="flex-1 py-2 rounded-lg text-xs font-bold bg-white text-red-600 shadow-sm">সদস্য</button>
                 <button onclick="setRole('Admin')" id="roleAdmin" class="flex-1 py-2 rounded-lg text-xs font-bold text-gray-500">এডমিন</button>
             </div>
-
             <div id="memberFields">
                 <input type="tel" id="uPhone" placeholder="মোবাইল নম্বর" class="w-full p-4 mb-4 border rounded-2xl text-center font-bold outline-none focus:border-red-500 bg-gray-50">
             </div>
             <div id="adminFields" class="hidden">
                 <input type="password" id="uPass" placeholder="এডমিন পাসওয়ার্ড" class="w-full p-4 mb-4 border rounded-2xl text-center font-bold outline-none focus:border-red-500 bg-gray-50">
             </div>
-
-            <button onclick="handleLogin()" id="lBtn" class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold shadow-lg active:scale-95 transition-transform">লগইন করুন</button>
+            <button onclick="handleLogin()" id="lBtn" class="w-full bg-red-600 text-white py-4 rounded-2xl font-bold">লগইন করুন</button>
             <p id="lErr" class="text-red-500 text-xs mt-3 hidden font-bold"></p>
-            
-            <div class="mt-6 pt-5 border-t border-gray-100">
-                <p class="text-[11px] text-gray-400 font-bold mb-2">আপনি কি নতুন সদস্য?</p>
-                <button onclick="showReg()" class="text-blue-600 font-bold text-sm underline">এখানে রেজিস্ট্রেশন করুন</button>
+            <div class="mt-6 pt-5 border-t">
+                <button onclick="showReg()" class="text-blue-600 font-bold text-sm underline">নতুন মেম্বার রেজিস্ট্রেশন</button>
             </div>
 
             <div class="mt-8 pt-6 border-t-2 border-dashed border-gray-100">
-                <p class="text-[10px] text-gray-400 font-black mb-3 uppercase tracking-widest">যোগাযোগ ও সোশ্যাল মিডিয়া</p>
-                <div class="bg-red-50 p-4 rounded-2xl mb-4">
+                <div class="bg-red-50 p-4 rounded-2xl mb-4 text-center">
                     <h3 class="text-sm font-black text-gray-800">প্রতিষ্ঠাতা পরিচালক</h3>
                     <p class="text-base font-bold text-red-600 mt-1">মোঃ মেহেদী হাসান</p>
-                    <div class="flex flex-wrap justify-center gap-2 mt-3">
-                        <a href="https://wa.me/8801888354739" target="_blank" class="bg-white text-green-600 px-4 py-2 rounded-xl text-xs font-bold border border-green-100 shadow-sm">WhatsApp</a>
-                        <a href="https://www.facebook.com/mdmehedihasan.mehedi.54922" target="_blank" class="bg-white text-blue-700 px-4 py-2 rounded-xl text-xs font-bold border border-blue-100 shadow-sm">Facebook</a>
+                    <div class="flex justify-center gap-2 mt-3">
+                        <a href="https://wa.me/8801888354739" target="_blank" class="bg-white text-green-600 px-4 py-2 rounded-xl text-xs font-bold shadow-sm">WhatsApp</a>
+                        <a href="https://www.facebook.com/mdmehedihasan.mehedi.54922" target="_blank" class="bg-white text-blue-700 px-4 py-2 rounded-xl text-xs font-bold shadow-sm">Facebook</a>
                     </div>
                 </div>
-                <a href="https://facebook.com/groups/jubokolyan.bdf/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-2xl font-bold text-xs shadow-md mb-3">👥 আমাদের ফেসবুক গ্রুপে জয়েন করুন</a>
-                <a href="tel:01888354739" class="flex items-center justify-center gap-2 bg-gray-800 text-white py-3 rounded-2xl font-bold text-sm w-full">📞 কল করুন: 01888354739</a>
+                <a href="https://facebook.com/groups/jubokolyan.bdf/" target="_blank" class="flex items-center justify-center gap-2 bg-blue-600 text-white py-3 rounded-2xl font-bold text-xs shadow-md mb-3">👥 ফেসবুক গ্রুপে জয়েন করুন</a>
             </div>
         </div>
     </div>
 
     <div id="regPage" class="container-custom hidden">
-        <div class="bg-white p-6 rounded-[35px] shadow-xl border border-gray-100">
-            <h2 class="text-lg font-bold text-gray-800 mb-5 text-center">মেম্বার রেজিস্ট্রেশন</h2>
-            <input type="text" id="regName" placeholder="সম্পূর্ণ নাম" class="w-full p-3 mb-3 border rounded-xl outline-none font-bold bg-gray-50">
-            <select id="regGroup" class="w-full p-3 mb-3 border rounded-xl outline-none font-bold bg-white">
+        <div class="bg-white p-6 rounded-[35px] shadow-xl border">
+            <h2 class="text-lg font-bold text-gray-800 mb-5 text-center">রেজিস্ট্রেশন করুন</h2>
+            <input type="text" id="regName" placeholder="সম্পূর্ণ নাম" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
+            <select id="regGroup" class="w-full p-3 mb-3 border rounded-xl font-bold bg-white">
                 <option value="">রক্তের গ্রুপ</option>
                 <option value="A+">A+</option><option value="A-">A-</option>
                 <option value="B+">B+</option><option value="B-">B-</option>
                 <option value="O+">O+</option><option value="O-">O-</option>
                 <option value="AB+">AB+</option><option value="AB-">AB-</option>
             </select>
-            <input type="text" id="regLoc" placeholder="ঠিকানা (গ্রাম, উপজেলা, জেলা। উদাঃ মহেশপুর, চাটখিল, নোয়াখালী)" class="w-full p-3 mb-3 border rounded-xl outline-none font-bold bg-gray-50 focus:border-red-500">
-            
-            <input type="tel" id="regPhone" placeholder="মোবাইল নম্বর" class="w-full p-3 mb-3 border rounded-xl outline-none font-bold bg-gray-50">
-            <p class="text-[10px] text-gray-500 mb-1 px-1">সর্বশেষ রক্তদান (ঐচ্ছিক)</p>
-            <input type="date" id="regLast" class="w-full p-3 mb-5 border rounded-xl outline-none font-bold bg-gray-50">
+            <input type="text" id="regLoc" placeholder="ঠিকানা (গ্রাম, উপজেলা, জেলা)" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
+            <input type="tel" id="regPhone" placeholder="মোবাইল নম্বর" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
+            <p class="text-[10px] text-gray-500 mb-1">সর্বশেষ রক্তদান (না দিয়ে থাকলে ফাঁকা রাখুন)</p>
+            <input type="date" id="regLast" class="w-full p-3 mb-5 border rounded-xl font-bold bg-gray-50">
             <button onclick="handleRegister()" id="rBtn" class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold shadow-lg">রেজিস্ট্রেশন সম্পন্ন করুন</button>
-            <button onclick="location.reload()" class="w-full text-gray-500 mt-4 text-sm font-bold">ফিরে যান</button>
+            <button onclick="location.reload()" class="w-full text-gray-500 mt-4 text-sm font-bold font-black underline">ফিরে যান</button>
         </div>
     </div>
 
     <div id="mainPage" class="hidden">
-        <div class="hero-gradient text-white p-5 rounded-b-[35px] text-center relative mb-4 shadow-lg">
+        <div class="hero-gradient text-white p-5 rounded-b-[35px] text-center relative mb-4">
             <button onclick="location.reload()" class="absolute top-4 right-4 text-[10px] bg-white/20 px-3 py-1 rounded-full border border-white/30">লগ আউট</button>
             <p id="welcome" class="text-xs font-bold text-yellow-200"></p>
         </div>
         <div class="container-custom mb-4">
-            <input type="text" id="searchInput" onkeyup="filterDonors()" placeholder="নাম বা গ্রুপ দিয়ে খুঁজুন..." class="w-full p-4 rounded-2xl border-none shadow-md outline-none focus:ring-2 focus:ring-red-500 font-bold">
+            <input type="text" id="searchInput" onkeyup="filterDonors()" placeholder="নাম বা গ্রুপ দিয়ে খুঁজুন..." class="w-full p-4 rounded-2xl border-none shadow-md font-bold">
         </div>
         <div id="donorList" class="container-custom grid gap-6"></div>
+    </div>
+
+    <div id="editModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-[100] backdrop-blur-sm">
+        <div class="bg-white p-6 rounded-[35px] w-full max-w-sm text-center shadow-2xl">
+            <h3 id="editingName" class="font-bold text-gray-800 mb-4 text-lg"></h3>
+            <p class="text-xs text-gray-500 mb-2 font-bold">নতুন রক্তদানের তারিখ দিন</p>
+            <input type="date" id="newDate" class="w-full p-4 border rounded-2xl mb-6 text-center font-bold bg-gray-50">
+            <div class="flex gap-2">
+                <button onclick="closeEdit()" class="flex-1 bg-gray-100 py-3 rounded-2xl font-bold text-gray-600">বাতিল</button>
+                <button onclick="submitUpdate()" id="sBtn" class="flex-1 bg-green-600 text-white py-3 rounded-2xl font-bold">সেভ করুন</button>
+            </div>
+        </div>
     </div>
 
     <script>
@@ -154,13 +158,29 @@
             renderDonors(allDonors.filter(d => d.n.toLowerCase().includes(term) || d.g.toLowerCase().includes(term) || d.l.toLowerCase().includes(term)));
         }
 
+        // তারিখ স্ট্যাটাস আপডেট
         function calculateStatus(dateStr) {
-            if(!dateStr || dateStr == "" || dateStr == "undefined") return { last: "আপডেট প্রয়োজন", next: "আপডেট প্রয়োজন" };
+            if(!dateStr || dateStr === "" || dateStr === "undefined" || dateStr === "Invalid Date") {
+                return { 
+                    last: "আপনার তথ্যটি আপডেট করে নিন", 
+                    next: "আপডেট প্রয়োজন ❌" 
+                };
+            }
             const lastDate = new Date(dateStr);
-            if (isNaN(lastDate.getTime())) return { last: "আপডেট প্রয়োজন", next: "আপডেট প্রয়োজন" };
+            if (isNaN(lastDate.getTime())) {
+                return { 
+                    last: "আপনার তথ্যটি আপডেট করে নিন", 
+                    next: "আপডেট প্রয়োজন ❌" 
+                };
+            }
             const diffDays = Math.floor((new Date() - lastDate) / (1000 * 60 * 60 * 24));
             const fmt = lastDate.toLocaleDateString('en-GB', { day: 'numeric', month: 'long', year: 'numeric' });
-            return diffDays >= 90 ? { last: fmt, next: "রক্ত দিতে পারবে ✅" } : { last: fmt, next: (90 - diffDays) + " দিন বাকী" };
+            
+            if (diffDays >= 90) {
+                return { last: fmt, next: "রক্ত দিতে পারবে ✅" };
+            } else {
+                return { last: fmt, next: (90 - diffDays) + " দিন বাকী" };
+            }
         }
 
         function renderDonors(data) {
@@ -169,9 +189,10 @@
                 const s = calculateStatus(d.last); const cIdx = index % 5;
                 const isMe = (loggedUser.role === 'Member' && String(d.p).slice(-10) === String(loggedUser.p).slice(-10));
                 const isAdmin = (loggedUser.role === 'Admin');
+                
                 list.innerHTML += `
                 <div class="bg-white p-5 rounded-[30px] shadow-sm border-t-[6px] card-${cIdx} relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-lg shadow-sm">${d.g}</div>
+                    <div class="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-lg">${d.g}</div>
                     <div class="mt-2 space-y-1">
                         <div class="info-row"><span class="info-label text-xs">সিরিয়াল নংঃ</span><span class="px-2 py-0.5 rounded-full text-[10px] font-black sl-${cIdx}">সিরিয়াল নংঃ ${String(index+1).padStart(2,'0')}</span></div>
                         <div class="info-row"><span class="info-label">নামঃ</span><span class="text-xl font-black text-gray-900 leading-tight">${d.n}</span></div>
@@ -181,12 +202,24 @@
                         <div class="info-row border-none pt-3">
                             <span class="info-label text-xs">মোবাইলঃ</span>
                             <div class="info-value flex items-center gap-3"><span class="text-blue-600 font-bold">${d.p}</span>
-                                <a href="tel:${d.p}" class="bg-green-500 text-white p-2 rounded-full shadow-md"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg></a>
+                                <a href="tel:${d.p}" class="bg-green-500 text-white p-2 rounded-full shadow-md active:scale-75 transition-transform"><svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg></a>
                             </div>
                         </div>
                     </div>
+                    ${(isMe || isAdmin) ? `<button onclick="openEdit('${d.p}', '${d.n}')" class="mt-4 w-full bg-blue-600 text-white py-3 rounded-2xl font-bold text-xs shadow-md">তথ্য আপডেট করুন</button>` : ''}
                 </div>`;
             });
+        }
+
+        function openEdit(p, n) { targetPhone = p; document.getElementById('editingName').innerText = n; document.getElementById('editModal').classList.remove('hidden'); }
+        function closeEdit() { document.getElementById('editModal').classList.add('hidden'); }
+        async function submitUpdate() {
+            const date = document.getElementById('newDate').value; if(!date) return;
+            document.getElementById('sBtn').innerText = "⏳...";
+            try {
+                await fetch(scriptURL, { method: 'POST', body: JSON.stringify({ action: "update", phone: targetPhone, newDate: date }) });
+                location.reload();
+            } catch (e) { alert("ব্যর্থ!"); }
         }
     </script>
 </body>
