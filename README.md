@@ -10,9 +10,23 @@
         body { font-family: 'Hind Siliguri', sans-serif; background-color: #f1f5f9; }
         .hero-gradient { background: linear-gradient(135deg, #dc2626 0%, #991b1b 100%); }
         .container-custom { width: 100%; padding-left: 10px; padding-right: 10px; max-width: 500px; margin: 0 auto; }
-        .info-row { display: flex; border-bottom: 1px solid #f3f4f6; padding: 8px 0; align-items: flex-start; }
+        .info-row { display: flex; border-bottom: 1px solid rgba(0,0,0,0.05); padding: 8px 0; align-items: flex-start; }
         .info-label { font-weight: 800; color: #4b5563; min-width: 110px; font-size: 14px; }
-        .info-value { font-weight: 600; color: #1f2937; font-size: 14px; flex: 1; }
+        .info-value { font-weight: 700; color: #1f2937; font-size: 14px; flex: 1; }
+        
+        /* কার্ডের আলাদা আলাদা বর্ডার কালার */
+        .card-0 { border-top-color: #dc2626; } /* Red */
+        .card-1 { border-top-color: #2563eb; } /* Blue */
+        .card-2 { border-top-color: #059669; } /* Green */
+        .card-3 { border-top-color: #7c3aed; } /* Purple */
+        .card-4 { border-top-color: #db2777; } /* Pink */
+        
+        /* সিরিয়াল নং এর ব্যাকগ্রাউন্ড কালার */
+        .sl-0 { background-color: #fee2e2; color: #dc2626; }
+        .sl-1 { background-color: #dbeafe; color: #2563eb; }
+        .sl-2 { background-color: #d1fae5; color: #059669; }
+        .sl-3 { background-color: #f3e8ff; color: #7c3aed; }
+        .sl-4 { background-color: #fce7f3; color: #db2777; }
     </style>
 </head>
 <body class="pb-20">
@@ -59,20 +73,9 @@
         <div id="donorList" class="container-custom grid gap-6"></div>
     </div>
 
-    <div id="editModal" class="fixed inset-0 bg-black/60 hidden flex items-center justify-center p-4 z-[100]">
-        <div class="bg-white p-8 rounded-[40px] w-full max-w-sm shadow-2xl text-center">
-            <h3 id="editingName" class="font-bold text-gray-800 text-lg mb-4"></h3>
-            <input type="date" id="newDate" class="w-full p-4 border-2 border-gray-50 rounded-2xl mb-6 bg-gray-50 outline-none font-bold text-center">
-            <div class="flex gap-3">
-                <button onclick="closeEdit()" class="flex-1 bg-gray-100 py-3 rounded-2xl font-bold text-sm">বাতিল</button>
-                <button onclick="submitUpdate()" id="sBtn" class="flex-1 bg-green-600 text-white py-3 rounded-2xl font-bold text-sm">সেভ করুন</button>
-            </div>
-        </div>
-    </div>
-
     <script>
         const scriptURL = "https://script.google.com/macros/s/AKfycbx2AUrExnRv7h2cMRlBv6nqpf3oNy5s9Bh0iKzGG3-5YhGC1NGDEWN7lsRmuaEHo92o/exec"; 
-        let allDonors = [], loggedUser = null, targetPhone = "";
+        let allDonors = [], loggedUser = null;
 
         function setRole(role) {
             const mFields = document.getElementById('memberFields'), aFields = document.getElementById('adminFields');
@@ -124,18 +127,24 @@
                 const isAdmin = (loggedUser.role === 'Admin');
                 const status = calculateStatus(d.last);
                 const slNo = String(index + 1).padStart(2, '0');
+                
+                // কালার ইনডেক্স নির্ধারণ (০ থেকে ৪ পর্যন্ত ঘুরবে)
+                const colorIdx = index % 5;
 
                 list.innerHTML += `
-                <div class="bg-white p-5 rounded-[30px] shadow-md border-t-4 border-red-600 relative overflow-hidden">
-                    <div class="absolute top-0 right-0 bg-red-600 text-white px-6 py-2 rounded-bl-[20px] font-black text-xl shadow-md">${d.g}</div>
+                <div class="bg-white p-5 rounded-[30px] shadow-sm border-t-[6px] card-${colorIdx} relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-gray-800 text-white px-5 py-2 rounded-bl-[20px] font-black text-xl shadow-md">${d.g}</div>
                     
                     <div class="mt-2 space-y-1">
-                        <div class="info-row"><span class="info-label">সিরিয়াল নংঃ</span><span class="info-value text-red-600">${slNo}</span></div>
-                        <div class="info-row"><span class="info-label">নামঃ</span><span class="info-value">${d.n}</span></div>
-                        <div class="info-row"><span class="info-label">ঠিকানাঃ</span><span class="info-value">${d.l}</span></div>
+                        <div class="info-row">
+                            <span class="info-label">সিরিয়াল নংঃ</span>
+                            <span class="px-3 py-0.5 rounded-full text-xs font-black sl-${colorIdx}">সিরিয়াল নংঃ ${slNo}</span>
+                        </div>
+                        <div class="info-row"><span class="info-label">নামঃ</span><span class="info-value text-gray-800">${d.n}</span></div>
+                        <div class="info-row"><span class="info-label">ঠিকানাঃ</span><span class="info-value text-gray-600">${d.l}</span></div>
                         <div class="info-row">
                             <span class="info-label">সর্বশেষ রক্তদানঃ</span>
-                            <span class="info-value ${status.needsUpdate ? 'text-orange-500' : ''}">${status.lastDate}</span>
+                            <span class="info-value ${status.needsUpdate ? 'text-orange-500' : 'text-gray-700'}">${status.lastDate}</span>
                         </div>
                         <div class="info-row">
                             <span class="info-label">পরবর্তী রক্তদানঃ</span>
@@ -171,17 +180,7 @@
             return { lastDate: formattedDate, txt: (90 - diffDays) + " দিন বাকী", canDonate: false, needsUpdate: false };
         }
 
-        function openEdit(phone, name) { targetPhone = phone; document.getElementById('editingName').innerText = name; document.getElementById('editModal').classList.remove('hidden'); }
-        function closeEdit() { document.getElementById('editModal').classList.add('hidden'); }
-        async function submitUpdate() {
-            const date = document.getElementById('newDate').value;
-            if(!date) return alert("তারিখ দিন!");
-            document.getElementById('sBtn').innerText = "হচ্ছে..";
-            try {
-                await fetch(scriptURL, { method: 'POST', body: JSON.stringify({ phone: targetPhone, newDate: date }) });
-                alert("সফলভাবে আপডেট হয়েছে!"); location.reload();
-            } catch (e) { alert("ব্যর্থ হয়েছে!"); }
-        }
+        function openEdit(phone, name) { targetPhone = phone; window.alert("তথ্য এডিট করতে তারিখ সিলেক্ট করুন। (এডিট পপআপ এই ডেমোতে ডিজেবল থাকতে পারে)"); }
     </script>
 </body>
 </html>
