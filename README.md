@@ -14,11 +14,12 @@
         .info-label { font-weight: 800; color: #4b5563; min-width: 115px; font-size: 14px; }
         .info-value { font-weight: 700; font-size: 14px; flex: 1; }
         
+        /* কার্ড ডিজাইন */
         .card-0 { border-top-color: #dc2626; } .card-1 { border-top-color: #2563eb; }
         .card-2 { border-top-color: #059669; } .card-3 { border-top-color: #7c3aed; }
         .card-4 { border-top-color: #db2777; }
         
-        .sl-badge { font-size: 32px; font-weight: 900; line-height: 1; opacity: 0.8; }
+        .sl-badge { font-size: 32px; font-weight: 900; line-height: 1; opacity: 0.15; position: absolute; bottom: 10px; right: 20px; }
         .text-red-custom { color: #dc2626; }
     </style>
 </head>
@@ -61,7 +62,7 @@
             <p id="lErr" class="text-red-500 text-xs mt-3 hidden font-bold"></p>
             
             <div class="mt-8 pt-6 border-t-2 border-dashed border-gray-100">
-                <div class="bg-red-50 p-5 rounded-[30px] mb-4 text-center border border-red-100 shadow-sm">
+                <div class="bg-red-50 p-5 rounded-[30px] mb-4 text-center border border-red-100">
                     <h3 class="text-[10px] font-black text-gray-400 uppercase tracking-widest">প্রতিষ্ঠাতা পরিচালক</h3>
                     <p class="text-xl font-black text-red-600 mt-1">মোঃ মেহেদী হাসান</p>
                     
@@ -84,10 +85,10 @@
 
     <div id="regPage" class="container-custom hidden">
         <div class="bg-white p-6 rounded-[35px] shadow-xl border">
-            <h2 class="text-lg font-bold text-gray-800 mb-5 text-center">রেজিস্ট্রেশন করুন</h2>
-            <input type="text" id="regName" placeholder="সম্পূর্ণ নাম" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
+            <h2 class="text-lg font-bold text-gray-800 mb-5 text-center">নতুন সদস্য নিবন্ধন</h2>
+            <input type="text" id="regName" placeholder="আপনার পূর্ণ নাম" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
             <select id="regGroup" class="w-full p-3 mb-3 border rounded-xl font-bold bg-white">
-                <option value="">রক্তের গ্রুপ</option>
+                <option value="">রক্তের গ্রুপ নির্বাচন করুন</option>
                 <option value="A+">A+</option><option value="A-">A-</option>
                 <option value="B+">B+</option><option value="B-">B-</option>
                 <option value="O+">O+</option><option value="O-">O-</option>
@@ -95,9 +96,9 @@
             </select>
             <input type="text" id="regLoc" placeholder="ঠিকানা (গ্রাম, উপজেলা, জেলা)" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
             <input type="tel" id="regPhone" placeholder="মোবাইল নম্বর" class="w-full p-3 mb-3 border rounded-xl font-bold bg-gray-50">
-            <p class="text-[10px] text-gray-500 mb-1 px-1 font-bold">সর্বশেষ রক্তদান (না দিয়ে থাকলে ফাঁকা রাখুন)</p>
+            <p class="text-[10px] text-gray-500 mb-1 px-1 font-bold italic">সর্বশেষ রক্তদানের তারিখ (না দিয়ে থাকলে ফাঁকা রাখুন)</p>
             <input type="date" id="regLast" class="w-full p-3 mb-5 border rounded-xl font-bold bg-gray-50">
-            <button onclick="handleRegister()" id="rBtn" class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold shadow-lg">রেজিস্ট্রেশন সম্পন্ন করুন</button>
+            <button onclick="handleRegister()" id="rBtn" class="w-full bg-green-600 text-white py-4 rounded-2xl font-bold shadow-lg">নিবন্ধন সম্পন্ন করুন</button>
             <button onclick="location.reload()" class="w-full text-gray-500 mt-4 text-sm font-bold">ফিরে যান</button>
         </div>
     </div>
@@ -107,12 +108,14 @@
             <button onclick="location.reload()" class="absolute top-4 right-4 text-[10px] bg-white/20 px-3 py-1 rounded-full border border-white/30 font-bold">লগ আউট</button>
             <div class="mt-2">
                 <h2 id="welcome" class="text-2xl font-black text-yellow-300"></h2>
-                <p class="text-xs mt-1 text-white/80 font-bold uppercase tracking-widest">সদস্য তালিকা</p>
+                <p class="text-xs mt-1 text-white/80 font-bold uppercase tracking-widest">যুব কল্যাণ রক্তদান ফাউন্ডেশন</p>
             </div>
         </div>
-        <div class="container-custom mb-4">
+        
+        <div class="container-custom mb-6">
             <input type="text" id="searchInput" onkeyup="filterDonors()" placeholder="নাম বা গ্রুপ দিয়ে খুঁজুন..." class="w-full p-4 rounded-2xl border-none shadow-md font-bold focus:ring-2 focus:ring-red-500 outline-none">
         </div>
+
         <div id="donorList" class="container-custom grid gap-6"></div>
     </div>
 
@@ -137,9 +140,12 @@
             const phone = document.getElementById('uPhone').value.trim();
             const pass = document.getElementById('uPass').value.trim();
             const err = document.getElementById('lErr');
-            err.innerText = "⏳ ডাটা যাচাই হচ্ছে..."; err.classList.remove('hidden');
+            err.innerText = "⏳ ডাটা লোড হচ্ছে..."; err.classList.remove('hidden');
+            
             try {
-                const res = await fetch(scriptURL); allDonors = await res.json();
+                const res = await fetch(scriptURL); 
+                allDonors = await res.json();
+                
                 if(currentRole === 'Admin' && pass === 'Mehedi4739') { 
                     loggedUser = { n: "এডমিন", role: "Admin" }; 
                     showMain(); 
@@ -148,9 +154,13 @@
                     if(user) { 
                         loggedUser = { ...user, role: "Member" }; 
                         showMain(); 
-                    } else { err.innerText = "❌ মেম্বার পাওয়া যায়নি!"; }
+                    } else { 
+                        err.innerText = "❌ মেম্বার পাওয়া যায়নি!"; 
+                    }
                 }
-            } catch (e) { err.innerText = "❌ সার্ভার এরর!"; }
+            } catch (e) { 
+                err.innerText = "❌ সার্ভার এরর! ইন্টারনেট চেক করুন।"; 
+            }
         }
 
         async function handleRegister() {
@@ -160,18 +170,19 @@
             const p = document.getElementById('regPhone').value.trim();
             const last = document.getElementById('regLast').value;
 
-            if(!n || !g || !l || !p) return alert("সব তথ্য দিন!");
+            if(!n || !g || !l || !p) return alert("সব তথ্য পূরণ করুন!");
             
             document.getElementById('rBtn').innerText = "⏳ প্রসেসিং...";
             document.getElementById('rBtn').disabled = true;
 
             try {
+                // ডুপ্লিকেট নম্বর চেক
                 const res = await fetch(scriptURL);
                 const data = await res.json();
                 const exists = data.find(d => String(d.p).slice(-10) === p.slice(-10));
                 
                 if(exists) {
-                    alert("রেজিস্ট্রেশন করা আছে আপনি সরাসরি লগইন করুন");
+                    alert("এই নম্বরটি দিয়ে ইতিমধ্যে রেজিস্ট্রেশন করা আছে। সরাসরি লগইন করুন।");
                     location.reload(); 
                     return;
                 }
@@ -180,11 +191,12 @@
                     method: 'POST', 
                     body: JSON.stringify({ action: "register", n: n, g: l, l: g, p: p, last: last }) 
                 });
-                alert("রেজিস্ট্রেশন সফল!"); 
+                alert("রেজিস্ট্রেশন সফল হয়েছে!"); 
                 location.reload();
             } catch (e) { 
-                alert("ব্যর্থ! আবার চেষ্টা করুন।"); 
+                alert("ব্যর্থ হয়েছে! আবার চেষ্টা করুন।"); 
                 document.getElementById('rBtn').disabled = false;
+                document.getElementById('rBtn').innerText = "নিবন্ধন সম্পন্ন করুন";
             }
         }
 
@@ -197,11 +209,17 @@
 
         function filterDonors() {
             const term = document.getElementById('searchInput').value.toLowerCase();
-            renderDonors(allDonors.filter(d => d.n.toLowerCase().includes(term) || d.l.toLowerCase().includes(term) || d.g.toLowerCase().includes(term)));
+            renderDonors(allDonors.filter(d => 
+                d.n.toLowerCase().includes(term) || 
+                d.l.toLowerCase().includes(term) || 
+                d.g.toLowerCase().includes(term)
+            ));
         }
 
         function calculateStatus(dateStr) {
-            if(!dateStr || dateStr === "" || dateStr === "undefined") return { last: "তথ্য নেই", next: "রক্ত দিতে পারবে ✅" };
+            if(!dateStr || dateStr === "" || dateStr === "undefined") {
+                return { last: "তথ্য নেই", next: "রক্ত দিতে পারবে ✅" };
+            }
             const lastDate = new Date(dateStr);
             if (isNaN(lastDate.getTime())) return { last: "তথ্য নেই", next: "রক্ত দিতে পারবে ✅" };
             const diffDays = Math.floor((new Date() - lastDate) / (1000 * 60 * 60 * 24));
@@ -210,16 +228,19 @@
         }
 
         function renderDonors(data) {
-            const list = document.getElementById('donorList'); list.innerHTML = "";
+            const list = document.getElementById('donorList'); 
+            list.innerHTML = "";
             data.forEach((d, index) => {
-                const s = calculateStatus(d.last); const cIdx = index % 5;
+                const s = calculateStatus(d.last); 
+                const cIdx = index % 5;
                 list.innerHTML += `
                 <div class="bg-white p-5 rounded-[30px] shadow-sm border-t-[6px] card-${cIdx} relative overflow-hidden">
                     <div class="absolute top-0 right-0 bg-red-600 text-white px-4 py-1.5 rounded-bl-2xl font-black text-lg shadow-sm">${d.l}</div>
                     <div class="space-y-1">
                         <div class="info-row"><span class="info-label">নামঃ</span><span class="text-xl font-black text-gray-900 leading-tight">${d.n}</span></div>
                         <div class="info-row"><span class="info-label text-xs">ঠিকানাঃ</span><span class="info-value text-gray-500 font-bold">${d.g}</span></div>
-                        <div class="info-row"><span class="info-label text-xs">পরবর্তী রক্তদানঃ</span><span class="info-value text-red-custom font-black">${s.next}</span></div>
+                        <div class="info-row"><span class="info-label text-xs">সর্বশেষ রক্তদানঃ</span><span class="info-value text-gray-700 font-bold">${s.last}</span></div>
+                        <div class="info-row"><span class="info-label text-xs">অবস্থাঃ</span><span class="info-value text-red-custom font-black">${s.next}</span></div>
                         <div class="info-row border-none pt-3">
                             <span class="info-label text-xs">মোবাইলঃ</span>
                             <div class="info-value flex items-center gap-3">
@@ -228,6 +249,7 @@
                             </div>
                         </div>
                     </div>
+                    <div class="sl-badge">#${index + 1}</div>
                 </div>`;
             });
         }
