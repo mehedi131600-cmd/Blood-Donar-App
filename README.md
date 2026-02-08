@@ -29,15 +29,19 @@
 <body class="pb-10">
 
     <div class="bg-white p-5 shadow-md text-center flex flex-col items-center mb-4 border-b-2 border-red-50">
-        <img src="https://i.ibb.co/68XvT9T/1000001730.png" 
-             onerror="this.src='https://i.ibb.co/C3m2X9Y/1000001730.png'"
-             class="w-20 h-20 mb-2 rounded-full border-4 border-red-50 shadow-lg object-cover">
+        <div class="w-24 h-24 mb-2 p-1 bg-white rounded-full border-4 border-red-100 shadow-lg overflow-hidden flex items-center justify-center">
+            <img src="https://i.ibb.co/68XvT9T/1000001730.png" 
+                 alt="Logo" 
+                 class="w-full h-full object-contain"
+                 onerror="this.src='https://i.ibb.co/C3m2X9Y/1000001730.png'">
+        </div>
         <h1 class="text-xl font-black text-red-600">যুব কল্যাণ রক্তদান ফাউন্ডেশন</h1>
     </div>
 
     <div id="loginPage" class="container-custom">
         <div class="bg-white p-6 rounded-[35px] shadow-xl text-center border">
             <h2 class="text-lg font-bold text-gray-800 mb-5">লগইন করুন</h2>
+            
             <div class="flex gap-2 mb-4 p-1 bg-gray-100 rounded-xl">
                 <button onclick="setRole('Member')" id="roleMember" class="flex-1 py-2 rounded-lg text-xs font-bold bg-white text-red-600 shadow-sm">সদস্য</button>
                 <button onclick="setRole('Admin')" id="roleAdmin" class="flex-1 py-2 rounded-lg text-xs font-bold text-gray-500">এডমিন</button>
@@ -67,8 +71,8 @@
                     
                     <div class="flex items-center justify-center gap-3 mt-3 bg-white p-2 rounded-2xl shadow-sm border border-red-50">
                         <span class="text-sm font-bold text-gray-700">মোবাইলঃ 01888354739</span>
-                        <a href="tel:01888354739" class="bg-green-500 text-white p-2 rounded-full shadow-md active:scale-75 transition-transform">
-                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                        <a href="tel:01888354739" class="bg-green-500 text-white p-2 rounded-full shadow-md active:scale-75">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                         </a>
                     </div>
 
@@ -107,7 +111,7 @@
             <button onclick="location.reload()" class="absolute top-4 right-4 text-[11px] bg-white/20 px-3 py-1 rounded-full border border-white/30 font-bold">লগ আউট</button>
             <div class="mt-2">
                 <h2 id="welcome" class="text-2xl font-black text-yellow-300"></h2>
-                <p class="text-xs mt-1 text-white/80 font-bold tracking-widest uppercase">যুব কল্যাণ রক্তদান ফাউন্ডেশন</p>
+                <p class="text-xs mt-1 text-white/80 font-bold tracking-widest uppercase">সদস্য তালিকা</p>
             </div>
         </div>
         <div class="container-custom mb-4">
@@ -152,11 +156,15 @@
             err.innerText = "⏳ ডাটা যাচাই হচ্ছে..."; err.classList.remove('hidden');
             try {
                 const res = await fetch(scriptURL); allDonors = await res.json();
-                if(currentRole === 'Admin' && pass === 'Mehedi4739') { loggedUser = { n: "এডমিন", role: "Admin" }; showMain(); }
-                else {
+                if(currentRole === 'Admin' && pass === 'Mehedi4739') { 
+                    loggedUser = { n: "এডমিন", role: "Admin" }; 
+                    showMain(); 
+                } else {
                     const user = allDonors.find(d => String(d.p).slice(-10) === phone.slice(-10));
-                    if(user) { loggedUser = { ...user, role: "Member" }; showMain(); }
-                    else { err.innerText = "❌ মেম্বার পাওয়া যায়নি!"; }
+                    if(user) { 
+                        loggedUser = { ...user, role: "Member" }; 
+                        showMain(); 
+                    } else { err.innerText = "❌ মেম্বার পাওয়া যায়নি!"; }
                 }
             } catch (e) { err.innerText = "❌ সার্ভার এরর!"; }
         }
@@ -184,7 +192,6 @@
                     return;
                 }
 
-                document.getElementById('rBtn').innerText = "⏳ রেজিস্ট্রেশন হচ্ছে...";
                 await fetch(scriptURL, { 
                     method: 'POST', 
                     body: JSON.stringify({ action: "register", n: n, g: l, l: g, p: p, last: last }) 
@@ -207,7 +214,7 @@
 
         function filterDonors() {
             const term = document.getElementById('searchInput').value.toLowerCase();
-            renderDonors(allDonors.filter(d => d.n.toLowerCase().includes(term) || d.g.toLowerCase().includes(term) || d.l.toLowerCase().includes(term)));
+            renderDonors(allDonors.filter(d => d.n.toLowerCase().includes(term) || d.l.toLowerCase().includes(term) || d.g.toLowerCase().includes(term)));
         }
 
         function calculateStatus(dateStr) {
@@ -237,14 +244,14 @@
                     <div class="space-y-1">
                         <div class="info-row"><span class="info-label">নামঃ</span><span class="text-xl font-black text-gray-900 leading-tight">${d.n}</span></div>
                         <div class="info-row"><span class="info-label text-xs">ঠিকানাঃ</span><span class="info-value text-gray-500 font-bold">${d.g}</span></div>
-                        <div class="info-row"><span class="info-label text-xs">সর্বশেষ রক্তদানঃ</span><span class="info-value text-red-custom">${s.last}</span></div>
+                        <div class="info-row"><span class="info-label text-xs">সর্বশেষ রক্তদানঃ</span><span class="info-value text-red-custom font-bold">${s.last}</span></div>
                         <div class="info-row"><span class="info-label text-xs">পরবর্তী রক্তদানঃ</span><span class="info-value text-red-custom font-black">${s.next}</span></div>
                         <div class="info-row border-none pt-3">
                             <span class="info-label text-xs">মোবাইলঃ</span>
                             <div class="info-value flex items-center gap-3">
                                 <span class="text-blue-600 font-bold text-base">${d.p}</span>
                                 <a href="tel:${d.p}" class="bg-green-500 text-white p-2.5 rounded-full shadow-md active:scale-75">
-                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="3" d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
+                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="3"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" /></svg>
                                 </a>
                             </div>
                         </div>
