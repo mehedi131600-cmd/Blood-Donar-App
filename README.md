@@ -33,7 +33,7 @@
             <img src="https://raw.githubusercontent.com/jkbf/JKBDF/main/1000001707.jpg" 
                  alt="Logo" 
                  class="w-full h-full object-contain"
-                 onerror="this.src='https://i.postimg.cc/8zYvTzPq/1000001707.jpg'">
+                 onerror="this.onerror=null; this.src='https://i.postimg.cc/8zYvTzPq/1000001707.jpg';">
         </div>
         <h1 class="text-xl font-black text-red-600">যুব কল্যাণ রক্তদান ফাউন্ডেশন</h1>
     </div>
